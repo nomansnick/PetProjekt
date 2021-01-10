@@ -5,6 +5,8 @@ import ButtonGeneric from "./ButtonGeneric";
 const KartyaDiv = styled.div`
 display: flex;
 flex-direction: column;
+justify-content: space-between;
+height: 175vh;
 `;
 
 const TitleDiv = styled.div`
@@ -18,43 +20,69 @@ const TitleText = styled.div`
 display: flex;
 font-size: 4vh;
 justify-content: center;
-`;
-
-const Inventory = styled.div`
-background-color: rgba(50, 50, 50, 60%)
+font-weight: bold;
 `;
 
 const Statistics = styled.div`
-background-color: rgba(50, 50, 50, 60%)
+display: flex;
+flex-direction: column;
+height: 40vh;
+justify-content: space-around;
+`;
+
+const NameDiv = styled.div`
+font-weight: bold;
+display: flex;
+flex: 1;
+margin-top: 10%;
+font-size: 3vh;
+
+`;
+
+const DescBottom = styled.div`
+text-align: center;
+font-size: 2vh;
+font-weight: bold;
+`;
+
+const StatInner = styled.div`
+font-size: 3vh;
+display: flex;
+flex-direction: column;
+flex: 4;
+justify-content: space-around;
+`;
+
+const RaceDiv = styled.div`
+text-align: center;
+margin-top: -10vh;
 `;
 
 function CharCard({myContent, Katt}) {
 
     return (
-        <KartyaDiv>
+        <KartyaDiv className = {myContent.classname}>
         <TitleDiv>
-        <div/>
-        <TitleText>{myContent.title}</TitleText>
+        <div className = "Hidden">"    "</div>
+        <TitleText>{myContent.classname}</TitleText>
         <div><ButtonGeneric text = "X" Clicked = {Katt}/></div>
         </TitleDiv>
+        <RaceDiv>{myContent.race}</RaceDiv>
         <Statistics>
-        <div>Stats: </div>  
-        <div>Name: {myContent.name}</div>
-        <div>Strength: {myContent.strength}</div>
-        <div>Dexterity: {myContent.dexterity}</div>
-        <div>Intelligence: {myContent.intelligence}</div>
-        <div>Charisma: {myContent.charisma}</div>
+        <NameDiv>
+            {myContent.name}
+        </NameDiv>
+        <StatInner>
+        <div>STR: {myContent.strength}</div>
+        <div>CON: {myContent.constitution}</div>
+        <div>DXT: {myContent.dexterity}</div>
+        <div>INT: {myContent.intelligence}</div>
+        <div>CHR: {myContent.charisma}</div>
+        </StatInner>
         </Statistics>
-        <Inventory>
-        <div>Equipped Items:</div>
-        <div>Main Hand: {myContent.inventory.mainhand.name}</div>
-        <div>Off-hand: {myContent.inventory.offhand.name}</div>
-        <div>Headwear: {myContent.inventory.head.name}</div>
-        <div>Armor: {myContent.inventory.body.name}</div>
-        <div>Legwear: {myContent.inventory.legs.name}</div>
-        </Inventory>
-        <div>{myContent.desc}</div>
-        <div>{myContent.race}</div>
+        <div>
+        <DescBottom>{myContent.desc}</DescBottom>
+        </div>
         </KartyaDiv>
     )
 }

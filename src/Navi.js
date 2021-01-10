@@ -16,7 +16,6 @@ color: rgb(40, 40, 40);
 const OneItem = styled.div`
 display: flex;
 justfiy-content: center;
-border: 1vh solid black;
 width: 100%;
 `;
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ButtonGeneric from "./ButtonGeneric";
 import styled from "styled-components";
 import Chars from "./ListOfChars";
@@ -15,35 +15,51 @@ flex-direction: row;
 `;
 
 function DropDown (props) {
-    const {text, isfree, klikked, emptyIt} = props
+    const {text, OnePlace, charList,
+        dropDownCharClicked, dropDownPlaceClicked,
+        isFreeArray, emptyIt, leavesPost, Day} = props
     const [isShown, setIsShown] = useState(false)
-    const [list, setList] = useState(Chars)
-    const [isOccupied, setIsOccupied] = useState(false)
-    const [activity, setActivity] = useState(text)
-    const [occupant, setOccupant] = useState("")
+    const [isUsed, setIsUsed] = useState(false)
+    const [num, setNum] = useState(-1)
 
+    useEffect (() => {setIsUsed(false)}, [Day])
 
-    function stuff() {
-        (!isOccupied) ?
-        setIsShown(!isShown) : setIsShown(false); setIsOccupied(false); setActivity(text); emptyIt(occupant); setOccupant("");
+    function DropDownClick() {
+        if (!isUsed) {
+        setIsShown(!isShown)
+        console.log(isFreeArray)
+    }
+        else {
+            console.log(OnePlace)
+            leavesPost(num);
+            dropDownPlaceClicked(num);
+            setIsUsed(false);
+            setNum(-1);
+        }
     }
     
-    function klikkelve(vmi1, vmi2) {
-        stuff();
-        setIsOccupied(true)
-        setOccupant(vmi2.index)
-        klikked(vmi1, vmi2);
-        setActivity(vmi2.title);
+    function CharClicked(iterated, text, onePlace) {
+        if (isUsed) {
+            console.log("NoMoreRoomInHell")
+        }
+        else {
+            dropDownCharClicked(iterated, text, onePlace);
+            setNum(iterated.index-1);
+            setIsUsed(true);
+            setIsShown(false);
+            emptyIt(iterated.index);
+        }
     }
 
     return (
         <DropDownDiv>
-        <ButtonGeneric text = {activity} Clicked = {stuff}/>
-        <Sides>{list.map(iterated =>
-                (<button className={isfree[iterated.index-1]
+        <ButtonGeneric text={isUsed ? charList[num]?.classname
+        : text} Clicked={() => DropDownClick()} />
+        <Sides>{charList.map(iterated =>
+                (<button className={isFreeArray[iterated.index-1]
                 && isShown ? iterated.classname : "Hidden"} key={iterated.index}
-                onClick={()=>klikkelve(text, iterated)}>
-                    {iterated.title}
+                onClick={() => CharClicked(iterated, text, OnePlace)}>
+                    {iterated.classname}
                 </button>
                 ))}
         </Sides>
@@ -52,3 +68,4 @@ function DropDown (props) {
 }
 
 export default DropDown
+

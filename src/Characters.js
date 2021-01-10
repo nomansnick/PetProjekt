@@ -8,14 +8,14 @@ justify-content: space-around;
 `;
 
 function Characters(props) {
-    const { list, klikkelt } = props
+    const { charlist, SideCharClick } = props
 
     return (
         <>
         <FrameCharList>
-                {list.map(iterated =>
-                (<div className={iterated.classname} key={iterated.index} onClick={() => klikkelt(iterated.index, iterated)}>
-                    {iterated.title}
+                {charlist.map(iterated =>
+                (<div key={iterated.index} onClick={() => SideCharClick(iterated)}>
+                    {iterated.classname}
                 </div>
                 ))}
         </FrameCharList>

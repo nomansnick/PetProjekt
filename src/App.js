@@ -1,5 +1,11 @@
 import './App.css';
-import React, {useState} from "react"
+import React, { useState } from "react"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import CharCard from "./CharCard";
 import Menu from "./Menu";
 import Navi from "./Navi";
@@ -7,139 +13,126 @@ import Camp from "./Camp";
 import Fields from "./Fields";
 import Village from "./Village";
 import Characters from "./Characters";
-import styled from "styled-components";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import Chars from "./ListOfChars";
+import { OverLay, CardDiv, Frame, TopShelf, LeftLower, TopLeft, LeftUpper, TopRight, MainBody, Left, Right, NextDayDiv } from "./styledCollection";
+import Vill from "./Data/PlaceData/vill.json";
+import Chars from "./Data/CharData/char.json";
+import Env from "./Data/EnvData/env.json";
+import ButtonNextDay from "./ButtonNextDay";
 
-const KartyaDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  width: 25%;
-  height: 60%;
-  background-color: rgba(170,170,170,80%);
-  border: solid black 5px;
-  position: fixed;
-  margin-top: 5%;
-  margin-left: 40%;
-  z-index: 1;
-  
-`;
-
-const Frame = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: stretch;
-height: 100vh;
-`;
-
-const TopShelf = styled.div`
-flex: 1;
-display: flex;
-flex-direction: row;
-background-color: rgb(30, 30, 30);
-`;
-
-const TopLeft = styled.div`
-flex: 1;
-display:flex;
-justify-content: center;
-align-items: center;
-background-color: rgba(100, 30, 100, 50%);
-align-items: center;
-`;
-
-const TopRight = styled.div`
-flex: 9;
-background-color: rgba(30, 150, 30, 50%);
-`;
-
-const MainBody = styled.div`
-flex: 9;
-display: flex;
-flex-direction: row;
-background-color: rgb(170, 170, 170);
-`
-
-const Left = styled.div`
-display: flex;
-flex: 1;
-background-color: rgba(100, 30, 100, 50%);
-`;
-
-const Right = styled.div`
-display: flex;
-flex: 9; 
-background-color: rgba(30, 150, 30, 50%)
-`;
 
 function App() {
+
   const [numShown, setNumShown] = useState(0);
   const [passedContent, setPassedContent] = useState();
-  const [isfree, setIsfree] = useState([true, true])
+  const [charList, setCharlist] = useState(Chars);
+  const [villageBuilding, setVillageBuilding] = useState(Vill);
+  const [allData, setAllData] = useState(charList.concat(villageBuilding));
+  const [isFreeArray, setIsFreeArray] = useState([true, true, true, true]);
+  const [env, setEnv] = useState(Env[0]);
+  const [Day, setDay] = useState(env.DayTime)
 
-  let list = Chars;
 
-  function menuClick() {
-    console.log("Klikk")
+  function dropDownPlaceClicked(num) {
+    console.log("PLACECLICKED")
+    charList[num].isFree = true;
+    charList[num].Questing = "";
+    charList[num].occupies = -1;
+    setCharlist(charList)
   }
 
-  function klikkelt (vmi1, vmi2) {
-    console.log(vmi1)
-    setNumShown(vmi1);
-    console.log(vmi2)
-    setPassedContent(vmi2);
+  function leavesPost(num) {
+  let answer = [];
+  for (let i = 0; i < isFreeArray.length; i++) {
+    i == num ? answer.push(true) : answer.push(isFreeArray[i]);
   }
+  setIsFreeArray(answer);}
 
-  function klikked(type, humanoid) {
-    let answer = [];
-    for (let i = 0; i < isfree.length; i++) {
-      i == humanoid.index-1 ? answer.push(false) : answer.push(isfree[i]);
-    }
-    setIsfree(answer);
-    type == "Mingling" ? console.log("Mingling") : console.log("Questing")
-    }
-
+  function dropDownCharClicked(oneMan, text, onePlace) {
+    console.log("CHARCLICKED")
+    charList[oneMan.index - 1].isFree = false;
+    charList[oneMan.index - 1].Questing = text;
+    charList[oneMan.index - 1].occupies = onePlace.index;   
+    console.log(charList[oneMan.index - 1]);
+    setCharlist(charList)
+  }
   function emptyIt(num) {
     let answer = [];
-    for (let i = 0; i < isfree.length; i++) {
-      i == num-1 ? answer.push(true) : answer.push(isfree[i]);
-    }
-    setIsfree(answer);
+  for (let i = 0; i < isFreeArray.length; i++) {
+    i == num - 1 ? answer.push(false) : answer.push(isFreeArray[i]);
   }
-  
+  setIsFreeArray(answer);}
+
+  function SideCharClick(content) {
+    setNumShown(content.index);
+    setPassedContent(content);
+  }
+
+  function menuClick() {
+    console.log("KATT")
+  }
+
+  function AdvanceTime() {
+    setNumShown(0);
+    if (env.DayTime == false) {
+      env.nrOfDay = env.nrOfDay + 1
+    }
+    env.DayTime = !env.DayTime
+    setDay(!Day)
+    setIsFreeArray([true, true, true, true])
+    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = ""));
+    setCharlist(charList);
+    console.log(charList);
+  }
 
   return (
-      <Router>
-         <div>{numShown !=  "0" && (<KartyaDiv><CharCard Katt = {() => setNumShown(0)} myContent = {passedContent} /></KartyaDiv>)}</div>
-              <Frame>
-                <TopShelf>
-                <TopLeft><Menu onclick={menuClick}/></TopLeft>
-                <TopRight><Navi /></TopRight>
-                </TopShelf>
-                <MainBody>
-                <Left><Characters list = {list} klikkelt = {klikkelt} /></Left>
-                <Right>
-                <Switch>
-                    <Route path="/village">
-                      <Village klikked = {klikked} emptyIt = {emptyIt} isfree = {isfree}/>
-                    </Route>
-                    <Route path="/fields">
-                      <Fields />
-                    </Route>
-                    <Route path="/">
-                      <Camp />
-                    </Route>
-                  </Switch>
-                </Right>
-                </MainBody>
-              </Frame>
-            </Router>
+    <Router >
+      <div>{numShown != "0" && (<CardDiv><CharCard Katt={() => setNumShown(0)} myContent={passedContent} /></CardDiv>)}</div>
+      <NextDayDiv>
+        <ButtonNextDay text = "Advance time" Clicked = {AdvanceTime}/>
+        </NextDayDiv>
+      <Frame>
+        <TopShelf>
+          <TopLeft>
+            <Menu onclick={menuClick} />
+          </TopLeft>
+          <TopRight><Navi /></TopRight>
+        </TopShelf>
+        <MainBody>
+        <OverLay className = {env.DayTime ? "Day" :"Night"}/>
+          <Left>
+            <LeftUpper>
+            <Characters SideCharClick={SideCharClick} charlist={charList} />
+            </LeftUpper>
+            <LeftLower>
+              <div>{env.nrOfDay}</div>
+              <div>{Day ? "The sun is high on the sky" : "The moon shines palely"}</div>
+            </LeftLower>
+            </Left>
+          <Right>
+            <Switch>
+              <Route path="/fields">
+                <Fields />
+              </Route>
+              <Route path="/village">
+                <Village
+                  charList={charList}
+                  buildings={villageBuilding}
+                  dropDownPlaceClicked={dropDownPlaceClicked}
+                  dropDownCharClicked={dropDownCharClicked}
+                  isFreeArray={isFreeArray}
+                  emptyIt = {emptyIt}
+                  leavesPost = {leavesPost}
+                  Day = {Day}
+                />
+              </Route>*/
+                  <Route path="/">
+                <Camp />
+              </Route>
+            </Switch>
+          </Right>
+        </MainBody>
+      </Frame>
+    </Router>
   );
 }
 
