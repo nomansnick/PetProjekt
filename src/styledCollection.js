@@ -15,8 +15,8 @@ const CardDiv = styled.div`
 `;
 
 const NextDayDiv = styled.div`
-position: fixed;
-margin-top: 5%;
+position: absolute;
+margin-top: 8%;
 margin-left: 91%;
 z-index: 5;
 `;
@@ -31,7 +31,7 @@ const Frame = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: stretch;
-height: 100vh;
+height: 98vh;
 `;
 
 const TopShelf = styled.div`
@@ -68,6 +68,7 @@ display: flex;
 flex-direction: column;
 flex: 1;
 background-color: rgba(100, 30, 100, 50%);
+border-right: 1vh black solid;
 `;
 
 const LeftUpper = styled.div`
@@ -77,6 +78,8 @@ flex: 4;
 
 const LeftLower = styled.div`
 display: flex;
+flex-direction: column;
+justify-content: space-around;
 flex: 1;
 `;
 
@@ -88,15 +91,17 @@ background-color: rgba(30, 150, 30, 50%)
 
 const VillageDiv = styled.div`
 display: flex;
-justify-content: space-around;
+justify-content: space-between;
 `;
 
 const OneBuilding = styled.div`
 display: flex;
+flex:1; 
 flex-direction: column;
 justify-content: space-between;
 align-items: center;
-border: 1vh rgba(100, 100, 100, 50%) solid;
+border-left: 1vh rgba(100, 100, 100, 50%) solid;
+height: 100%;
 flex:1;
 `;
 
@@ -115,8 +120,9 @@ text-align: right;
 
 const ButtonDiv = styled.div`
 display: flex;
-width: 100%;
 justify-content: space-around;
+width: 100%;
+margin-bottom: -35%;
 `;
 
 const BottomDv = styled.div`
@@ -124,17 +130,23 @@ display: flex;
 flex-direction: column;
 justify-content: space-around;
 height: 10vh;
+margin-bottom: 5%;
 `;
 
 const OverLay = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   margin-left: 10%;
-  width: 100%;
-  height: 100vh;
+  width: 88%;
+  height: 85%;
   z-index: 2;
   pointer-events: none;
 `;
 
+const ItsClosed = styled.div`
+  margin-bottom: 5%;
+  text-align: center;
+`;
+
 export {Right, DayButton, Left, MainBody, TopLeft, TopShelf, TopRight, Frame, CardDiv, LeftLower, LeftUpper,
-  BottomDv, ButtonDiv, Righty, Center, Title, OneBuilding, VillageDiv, NextDayDiv, OverLay}
+  BottomDv, ButtonDiv, Righty, Center, Title, OneBuilding, VillageDiv, NextDayDiv, OverLay, ItsClosed}

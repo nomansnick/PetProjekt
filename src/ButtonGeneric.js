@@ -1,9 +1,14 @@
 import React from "react"
+import styled from "styled-components";
+
+const ButtonGenericDiv = styled.button`
+max-width: 20vh;
+`;
 
 function ButtonGeneric(props) {
     const {Clicked, text} = props
 return (
-    <button onClick = {Clicked}>{text}</button>
+    <ButtonGenericDiv onClick = {Clicked}>{text}</ButtonGenericDiv>
 )
 }
 

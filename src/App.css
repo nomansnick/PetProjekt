@@ -3,19 +3,50 @@
 }
 
 .Day {
-  background-color: rgba(180, 130, 40, 0.2);
+  background: linear-gradient(to bottom left, rgba(200, 150, 40, 0.3), rgba(231, 222, 222, 0.01));
 }
 
 .Night {
-  background-color: rgba(40, 25, 90, 0.2);
+  background: linear-gradient(to bottom left, rgba(137, 177, 187, 0.3), rgba(11, 21, 66, 0.7));
 }
 
 .Knight {
   background-image: url("./images/knight.png");
   background-size: cover;
 }
+.Knig {
+  width: 8vh;
+  height: 8vh;
+}
 
 .Ranger {
   background-image: url("./images/ranger.png");
   background-size: cover;
+}
+
+.Rang {
+  width: 8vh;
+  height: 8vh;
+  text-align: center;
+}
+
+.Guardian {
+  background-image: url("./images/guardian.png");
+  background-size: cover;
+}
+
+.Guard {
+  width: 8vh;
+  height: 8vh;
+  text-align: center;
+}
+
+.Mage {
+  text-align: center;
+}
+
+.Mag {
+  width: 8vh;
+  height: 8vh;
+  text-align: center;
 }

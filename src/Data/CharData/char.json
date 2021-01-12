@@ -2,6 +2,7 @@
     {
         "index": 1,
         "classname": "Knight",
+        "classnameSmall": "Knig",
         "desc": "Bastard of Duke Bernar Gavresson.",
         "name": "Alester Reines",
         "strength": 5,
@@ -22,6 +23,7 @@
     {
         "index": 2,
         "classname": "Ranger",
+        "classnameSmall": "Rang",
         "desc": "Banished from the Nightless Realm.",
         "name": "Erlen Milsir",
         "strength": 1,
@@ -42,6 +44,7 @@
     {
         "index": 3,
         "classname": "Guardian",
+        "classnameSmall": "Guard",
         "desc": "Veteran turned adventurer.",
         "name": "Gorsik Kartan",
         "strength": 5,
@@ -62,6 +65,7 @@
     {
         "index": 4,
         "classname": "Mage",
+        "classnameSmall": "Mag",
         "desc": "Scholar, wizard, adventurer.",
         "name": "Tir-Sammen",
         "strength": 2,

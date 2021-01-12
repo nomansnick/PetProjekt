@@ -1,38 +1,43 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
 import DropDown from "./DropDown";
-import {BottomDv, ButtonDiv, Righty, Center, Title, OneBuilding, VillageDiv} from "./styledCollection"
+import {ItsClosed, BottomDv, ButtonDiv, Righty, Center, Title, OneBuilding, VillageDiv} from "./styledCollection"
 
 function Village(props) {
-    const { buildings, charList, dropDownCharClicked, emptyIt,
-        dropDownPlaceClicked, isFreeArray, Day, leavesPost } = props
+    const { buildings, charList, dropDownCharClicked,
+        dropDownPlaceClicked, Day, ForceRefresh} = props
 
     return (
         <VillageDiv>
             {buildings.map(OnePlace =>
                 <OneBuilding className={OnePlace.name} key={OnePlace.index}>
-                    <Center><Title>{OnePlace.name}</Title>
-                        {OnePlace.desc3}</Center>
-                    <div>{OnePlace.name}</div>
-                    <ButtonDiv>
+                    <Center><Title>{OnePlace.name}</Title></Center>
+                    <div>IdeJonAKep</div>
+                    {   Day && OnePlace.name == "Tavern"
+                        || !Day && OnePlace.name == "Store"
+                        ? <ItsClosed> {OnePlace.desc3} </ItsClosed>
+                        : <ButtonDiv>
                         {OnePlace.isQuestGiver &&
                         <DropDown text="Questing" OnePlace={OnePlace} charList={charList}
                         dropDownPlaceClicked = {dropDownPlaceClicked}
                         dropDownCharClicked = {dropDownCharClicked}
-                        isFreeArray = {isFreeArray}
-                        emptyIt = {emptyIt}
-                        leavesPost = {leavesPost}
+                        ForceRefresh = {ForceRefresh}
                         Day = {Day}
+                        passedOccupant = {OnePlace.occupant1}
+                        passedUsed = {OnePlace.slot1}
+                        buildings = {buildings}
+                        typ = "Quest"
                         />}
                         <DropDown text="Mingle" OnePlace={OnePlace} charList={charList}
                         dropDownPlaceClicked = {dropDownPlaceClicked}
                         dropDownCharClicked = {dropDownCharClicked}
-                        isFreeArray = {isFreeArray}
-                        emptyIt = {emptyIt}
-                        leavesPost = {leavesPost}
+                        ForceRefresh = {ForceRefresh}
                         Day = {Day}
+                        passedOccupant = {OnePlace.occupant2}
+                        passedUsed = {OnePlace.slot2}
+                        buildings = {buildings}
+                        typ = "Ming"
                         />
-                    </ButtonDiv>
+                    </ButtonDiv>}
                     <BottomDv>
                         <Center>{OnePlace.desc}</Center>
                         <Righty>{OnePlace.desc2}</Righty>
@@ -44,7 +49,3 @@ function Village(props) {
 }
 
 export default Village;
-/*
-
-
-*/

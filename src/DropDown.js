@@ -1,64 +1,72 @@
 import React, {useEffect, useState} from "react";
 import ButtonGeneric from "./ButtonGeneric";
 import styled from "styled-components";
-import Chars from "./ListOfChars";
 import "./App.css";
 
 const DropDownDiv = styled.div`
 display: flex;
 flex-direction: column;
+align-items: center;
 `;
 
 const Sides = styled.div`
 display: flex;
 flex-direction: row;
+justify-content: space-around;
+align-items: space-around;
+width: 20vh;
+height: 20vh;
+flex-wrap: wrap;
+margin-top: 10%;
 `;
 
 function DropDown (props) {
     const {text, OnePlace, charList,
         dropDownCharClicked, dropDownPlaceClicked,
-        isFreeArray, emptyIt, leavesPost, Day} = props
+        Day, ForceRefresh, typ, PassedOccupant, PassedUsed, buildings} = props
     const [isShown, setIsShown] = useState(false)
-    const [isUsed, setIsUsed] = useState(false)
-    const [num, setNum] = useState(-1)
+    const [usedList, setUsedList] = useState(charList)
+    const [Place, setPlace] = useState(OnePlace)
+    const [isUsed, setIsUsed] = useState(PassedUsed)
+    const [num, setNum] = useState(PassedOccupant)
 
-    useEffect (() => {setIsUsed(false)}, [Day])
+    useEffect (() => {setIsShown(false)}, [Day])
+    useEffect (() =>{setUsedList(charList)}, [ForceRefresh])
+    useEffect (() =>{setPlace(OnePlace)}, [ForceRefresh])
+    useEffect (() =>{typ == "Ming" ? setIsUsed(buildings[OnePlace.index-1].slot2)
+    : setIsUsed(buildings[OnePlace.index-1].slot1)}, [ForceRefresh])
+
+    useEffect (() =>{typ == "Ming" ? setNum(buildings[OnePlace.index-1].occupant2)
+    : setNum(buildings[OnePlace.index-1].occupant1)}, [ForceRefresh])
 
     function DropDownClick() {
         if (!isUsed) {
         setIsShown(!isShown)
-        console.log(isFreeArray)
     }
         else {
             console.log(OnePlace)
-            leavesPost(num);
-            dropDownPlaceClicked(num);
-            setIsUsed(false);
-            setNum(-1);
+            dropDownPlaceClicked(num, typ, OnePlace);
         }
     }
     
-    function CharClicked(iterated, text, onePlace) {
+    function CharClicked(iterated, text, Place) {
         if (isUsed) {
             console.log("NoMoreRoomInHell")
         }
         else {
-            dropDownCharClicked(iterated, text, onePlace);
-            setNum(iterated.index-1);
-            setIsUsed(true);
+            dropDownCharClicked(iterated, text, Place, typ);
             setIsShown(false);
-            emptyIt(iterated.index);
         }
     }
 
     return (
         <DropDownDiv>
-        <ButtonGeneric text={isUsed ? charList[num]?.classname
+        <ButtonGeneric text={isUsed ? usedList[num-1]?.classname
         : text} Clicked={() => DropDownClick()} />
-        <Sides>{charList.map(iterated =>
-                (<button className={isFreeArray[iterated.index-1]
-                && isShown ? iterated.classname : "Hidden"} key={iterated.index}
-                onClick={() => CharClicked(iterated, text, OnePlace)}>
+        <Sides>{usedList.map(iterated =>
+                (<button className={iterated.occupies == -1
+                && isShown ? iterated.classnameSmall : "Hidden"} key={iterated.index}
+                onClick={() => CharClicked(iterated, text, Place)}>
                     {iterated.classname}
                 </button>
                 ))}
@@ -69,3 +77,7 @@ function DropDown (props) {
 
 export default DropDown
 
+/*
+
+
+*/

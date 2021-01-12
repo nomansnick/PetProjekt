@@ -1,4 +1,6 @@
-[   {   "name": "Tavern",
+[   
+{
+    "name": "Tavern",
     "desc": "''Tis but a den of thieves and liars. Much like his Majesty's court, I tell you!'",
     "desc2": "Enke Seraj, Court Wizard",
     "desc3": "Closed until sunset!",
@@ -6,6 +8,10 @@
     "isShop": true,
     "isDayTime": false,
     "isNightTime": true,
+    "slot1": false,
+    "slot2": false,
+    "occupant1": -1,
+    "occupant2": -1,    
     "index": 1
 },
 {   "name": "Guild",
@@ -16,6 +22,10 @@
     "isShop": false,
     "isDayTime": true,
     "isNightTime": true,
+    "slot1": false,
+    "slot2": false,
+    "occupant1": -1,
+    "occupant2": -1,  
     "index": 2
 },
 {   "name": "Store",
@@ -26,6 +36,10 @@
     "isShop": true,
     "isDayTime": true,
     "isNightTime": false,
+    "slot1": false,
+    "slot2": false,
+    "occupant1": -1,
+    "occupant2": -1,  
     "index": 3
 }
 ]

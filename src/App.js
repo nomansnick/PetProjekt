@@ -18,6 +18,7 @@ import Vill from "./Data/PlaceData/vill.json";
 import Chars from "./Data/CharData/char.json";
 import Env from "./Data/EnvData/env.json";
 import ButtonNextDay from "./ButtonNextDay";
+import EndOfDayQuest from "./EndOfDayQuest";
 
 
 function App() {
@@ -27,40 +28,47 @@ function App() {
   const [charList, setCharlist] = useState(Chars);
   const [villageBuilding, setVillageBuilding] = useState(Vill);
   const [allData, setAllData] = useState(charList.concat(villageBuilding));
-  const [isFreeArray, setIsFreeArray] = useState([true, true, true, true]);
   const [env, setEnv] = useState(Env[0]);
-  const [Day, setDay] = useState(env.DayTime)
+  const [Day, setDay] = useState(env.DayTime);
+  const [ForceRefresh, SetForceRefresh] = useState(true);
 
 
-  function dropDownPlaceClicked(num) {
+  function dropDownPlaceClicked(num, type, onePlace) {
     console.log("PLACECLICKED")
-    charList[num].isFree = true;
-    charList[num].Questing = "";
-    charList[num].occupies = -1;
+    charList[num - 1].isFree = true;
+    charList[num - 1].Questing = "";
+    charList[num - 1].occupies = -1;
+    type == "Ming" ?
+      villageBuilding[onePlace.index - 1].slot2 = false :
+      villageBuilding[onePlace.index - 1].slot1 = false;
+    type == "Ming" ?
+      villageBuilding[onePlace.index - 1].occupant2 = -1 :
+      villageBuilding[onePlace.index - 1].occupant1 = -1;
     setCharlist(charList)
+    SetForceRefresh(!ForceRefresh)
+
   }
 
-  function leavesPost(num) {
-  let answer = [];
-  for (let i = 0; i < isFreeArray.length; i++) {
-    i == num ? answer.push(true) : answer.push(isFreeArray[i]);
-  }
-  setIsFreeArray(answer);}
-
-  function dropDownCharClicked(oneMan, text, onePlace) {
+  function dropDownCharClicked(oneMan, text, onePlace, type) {
+    let result;
     console.log("CHARCLICKED")
     charList[oneMan.index - 1].isFree = false;
     charList[oneMan.index - 1].Questing = text;
-    charList[oneMan.index - 1].occupies = onePlace.index;   
+    charList[oneMan.index - 1].occupies = onePlace.index;
     console.log(charList[oneMan.index - 1]);
-    setCharlist(charList)
+    result = charList;
+
+    type == "Ming" ?
+      villageBuilding[onePlace.index - 1].slot2 = true :
+      villageBuilding[onePlace.index - 1].slot1 = true;
+    type == "Ming" ?
+      villageBuilding[onePlace.index - 1].occupant2 = oneMan.index :
+      villageBuilding[onePlace.index - 1].occupant1 = oneMan.index;
+
+    setCharlist(result)
+    SetForceRefresh(!ForceRefresh);
+
   }
-  function emptyIt(num) {
-    let answer = [];
-  for (let i = 0; i < isFreeArray.length; i++) {
-    i == num - 1 ? answer.push(false) : answer.push(isFreeArray[i]);
-  }
-  setIsFreeArray(answer);}
 
   function SideCharClick(content) {
     setNumShown(content.index);
@@ -78,8 +86,10 @@ function App() {
     }
     env.DayTime = !env.DayTime
     setDay(!Day)
-    setIsFreeArray([true, true, true, true])
     charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = ""));
+    villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
+      element.occupant2 = -1, element.slot2 = false));
+    SetForceRefresh(!ForceRefresh)
     setCharlist(charList);
     console.log(charList);
   }
@@ -88,8 +98,8 @@ function App() {
     <Router >
       <div>{numShown != "0" && (<CardDiv><CharCard Katt={() => setNumShown(0)} myContent={passedContent} /></CardDiv>)}</div>
       <NextDayDiv>
-        <ButtonNextDay text = "Advance time" Clicked = {AdvanceTime}/>
-        </NextDayDiv>
+        <ButtonNextDay text="Advance time" Clicked={AdvanceTime} />
+      </NextDayDiv>
       <Frame>
         <TopShelf>
           <TopLeft>
@@ -98,20 +108,21 @@ function App() {
           <TopRight><Navi /></TopRight>
         </TopShelf>
         <MainBody>
-        <OverLay className = {env.DayTime ? "Day" :"Night"}/>
+          <OverLay className={env.DayTime ? "Day" : "Night"} />
           <Left>
             <LeftUpper>
-            <Characters SideCharClick={SideCharClick} charlist={charList} />
+              <Characters SideCharClick={SideCharClick} charlist={charList} />
             </LeftUpper>
             <LeftLower>
-              <div>{env.nrOfDay}</div>
+              <div>Number of Days: {env.nrOfDay}</div>
               <div>{Day ? "The sun is high on the sky" : "The moon shines palely"}</div>
             </LeftLower>
-            </Left>
+          </Left>
           <Right>
             <Switch>
               <Route path="/fields">
-                <Fields />
+                <Fields
+                />
               </Route>
               <Route path="/village">
                 <Village
@@ -119,14 +130,14 @@ function App() {
                   buildings={villageBuilding}
                   dropDownPlaceClicked={dropDownPlaceClicked}
                   dropDownCharClicked={dropDownCharClicked}
-                  isFreeArray={isFreeArray}
-                  emptyIt = {emptyIt}
-                  leavesPost = {leavesPost}
-                  Day = {Day}
+                  Day={Day}
+                  ForceRefresh={ForceRefresh}
+                  onClick={() => SetForceRefresh(!ForceRefresh)}
                 />
               </Route>*/
                   <Route path="/">
-                <Camp />
+                <Camp
+                />
               </Route>
             </Switch>
           </Right>
@@ -137,3 +148,23 @@ function App() {
 }
 
 export default App;
+
+/*
+
+  function leavesPost(num) {
+  let answer = [];
+  for (let i = 0; i < isFreeArray.length; i++) {
+    i == num ? answer.push(true) : answer.push(isFreeArray[i]);
+  }
+  setIsFreeArray(answer);}
+
+  function emptyIt(num) {
+    let answer = [];
+  for (let i = 0; i < isFreeArray.length; i++) {
+    i == num - 1 ? answer.push(false) : answer.push(isFreeArray[i]);
+  }
+  setIsFreeArray(answer);}
+
+  emptyIt = {emptyIt}
+  leavesPost = {leavesPost}
+*/
