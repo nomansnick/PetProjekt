@@ -8,8 +8,8 @@ function Village(props) {
 
     return (
         <VillageDiv>
-            {buildings.map(OnePlace =>
-                <OneBuilding className={OnePlace.name} key={OnePlace.index}>
+            {buildings.slice(0, 3).map(OnePlace =>
+                    <OneBuilding className={OnePlace.name} key={OnePlace.index}>
                     <Center><Title>{OnePlace.name}</Title></Center>
                     <div>IdeJonAKep</div>
                     {   Day && OnePlace.name == "Tavern"

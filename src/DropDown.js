@@ -49,12 +49,11 @@ function DropDown (props) {
         }
     }
     
-    function CharClicked(iterated, text, Place) {
+    function CharClicked(iterated, Place) {
         if (isUsed) {
-            console.log("NoMoreRoomInHell")
         }
         else {
-            dropDownCharClicked(iterated, text, Place, typ);
+            dropDownCharClicked(iterated, Place, typ);
             setIsShown(false);
         }
     }
@@ -66,7 +65,7 @@ function DropDown (props) {
         <Sides>{usedList.map(iterated =>
                 (<button className={iterated.occupies == -1
                 && isShown ? iterated.classnameSmall : "Hidden"} key={iterated.index}
-                onClick={() => CharClicked(iterated, text, Place)}>
+                onClick={() => CharClicked(iterated, Place)}>
                     {iterated.classname}
                 </button>
                 ))}

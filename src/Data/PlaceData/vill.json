@@ -12,7 +12,8 @@
     "slot2": false,
     "occupant1": -1,
     "occupant2": -1,    
-    "index": 1
+    "index": 1,
+    "giver": "Innkeeper Samel Yonik"
 },
 {   "name": "Guild",
     "desc": "'Ah, yes, the Guild... A place where the old and cowardly send the young and foolish to die!'",
@@ -26,7 +27,8 @@
     "slot2": false,
     "occupant1": -1,
     "occupant2": -1,  
-    "index": 2
+    "index": 2,
+    "giver": "Guildmaster Zhival Tarlesten"
 },
 {   "name": "Store",
     "desc": "'Don't be cheap when it comes to protection. You'll regret buying that lousy helmet when an axe splits your head!'",
@@ -40,6 +42,7 @@
     "slot2": false,
     "occupant1": -1,
     "occupant2": -1,  
-    "index": 3
+    "index": 3,
+    "giver": "Shopkeeper Yenes Vhal"
 }
 ]

@@ -18,7 +18,8 @@ import Vill from "./Data/PlaceData/vill.json";
 import Chars from "./Data/CharData/char.json";
 import Env from "./Data/EnvData/env.json";
 import ButtonNextDay from "./ButtonNextDay";
-import EndOfDayQuest from "./EndOfDayQuest";
+import EndOfDayEvent from "./EndOfDayEvent";
+import {Quest} from "./QuestAndEnemy/QuestV2";
 
 
 function App() {
@@ -31,72 +32,148 @@ function App() {
   const [env, setEnv] = useState(Env[0]);
   const [Day, setDay] = useState(env.DayTime);
   const [ForceRefresh, SetForceRefresh] = useState(true);
+  const [quest, setQuest] = useState(Quest);
+  const [endOfdayShown, setEndOfDayShown] = useState(false)
+  const [checkedStat, setCheckedStat] = useState("");
+  const [endDayChar, setEndDayChar] = useState(charList[0])
+  const [rand, setRand] = useState();
+  const [rand2, setRand2] = useState();
 
+  let random;
 
   function dropDownPlaceClicked(num, type, onePlace) {
-    console.log("PLACECLICKED")
-    charList[num - 1].isFree = true;
-    charList[num - 1].Questing = "";
-    charList[num - 1].occupies = -1;
-    type == "Ming" ?
-      villageBuilding[onePlace.index - 1].slot2 = false :
-      villageBuilding[onePlace.index - 1].slot1 = false;
-    type == "Ming" ?
-      villageBuilding[onePlace.index - 1].occupant2 = -1 :
-      villageBuilding[onePlace.index - 1].occupant1 = -1;
+    charUpdate(num - 1, true, -1, "")
+    buildUpdate(type, onePlace.index - 1, false, -1)
     setCharlist(charList)
     SetForceRefresh(!ForceRefresh)
-
+    console.log("Place: ", charList)
   }
 
-  function dropDownCharClicked(oneMan, text, onePlace, type) {
-    let result;
-    console.log("CHARCLICKED")
-    charList[oneMan.index - 1].isFree = false;
-    charList[oneMan.index - 1].Questing = text;
-    charList[oneMan.index - 1].occupies = onePlace.index;
-    console.log(charList[oneMan.index - 1]);
-    result = charList;
-
-    type == "Ming" ?
-      villageBuilding[onePlace.index - 1].slot2 = true :
-      villageBuilding[onePlace.index - 1].slot1 = true;
-    type == "Ming" ?
-      villageBuilding[onePlace.index - 1].occupant2 = oneMan.index :
-      villageBuilding[onePlace.index - 1].occupant1 = oneMan.index;
-
-    setCharlist(result)
+  function dropDownCharClicked(oneMan, onePlace, type) {
+    charUpdate(oneMan.index - 1, false, onePlace.index, type)
+    buildUpdate(type, onePlace.index - 1, true, oneMan.index)
+    setCharlist(charList)
     SetForceRefresh(!ForceRefresh);
-
+    console.log("Char: ", charList)
   }
+
+  function charUpdate(num, bool, num2, type) {
+    charList[num].isFree = bool;
+    charList[num].Questing = type;
+    charList[num].occupies = num2;
+  }
+
+  function buildUpdate(type, num1, bool, num2) {
+    if (type == "Ming") {
+      villageBuilding[num1].slot2 = bool;
+      villageBuilding[num1].occupant2 = num2
+    }
+    else {
+      villageBuilding[num1].slot1 = bool;
+      villageBuilding[num1].occupant1 = num2;
+    }
+  }
+
+  function updateStats(oneChar) {
+    console.log("ebből: " , oneChar)
+    charList[oneChar.index - 1] = oneChar;
+    console.log("ez: " , charList[oneChar.index - 1])
+    setCharlist(charList);
+  };
+
+  function endDone() {
+    setEndOfDayShown(false);
+    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = ""));
+    setDay(!Day)
+    villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
+      element.occupant2 = -1, element.slot2 = false));
+    SetForceRefresh(!ForceRefresh);
+    charList.forEach(element => levelUp(element));
+    setCharlist(charList);
+    !env.DayTime ? env.nrOfDay = env.nrOfDay + 1 : env.nrOfDay = env.nrOfDay;
+    env.DayTime = !env.DayTime;
+    setEndDayChar(charList[0]);
+  };
 
   function SideCharClick(content) {
     setNumShown(content.index);
     setPassedContent(content);
   }
 
+  function increaseStat(string, char) {
+    if (char.skillpoints > 0) {
+    charList[char.index-1][string] = charList[[char.index-1]][string] + 1;
+    char.skillpoints = char.skillpoints-1;
+    setCharlist(charList);
+    SetForceRefresh(!ForceRefresh);}
+  }
+
+  function levelUp(checkedChar) {
+    switch (checkedChar.lvl) {
+      case 1:
+        levelUpInner(checkedChar, env.xpToLevel2)
+        break;
+      case 2:
+        levelUpInner(checkedChar, env.xpToLevel3)
+        break;
+      case 3:
+        levelUpInner(checkedChar, env.xpToLevel4)
+        break;
+      case 4:
+        levelUpInner(checkedChar, env.xpToLevel5)
+        break;
+      case 5:
+        levelUpInner(checkedChar, env.xpToLevel6)
+        break;
+      case 6:
+        levelUpInner(checkedChar, env.xpToLevel7)
+        break;
+      case 7:
+        levelUpInner(checkedChar, env.xpToLevel8)
+        break;
+      case 8:
+        levelUpInner(checkedChar, env.xpToLevel9)
+        break;
+      case 9:
+        levelUpInner(checkedChar, env.xpToLevel10)
+        break;
+    }
+  }
+
+  function levelUpInner(checkedChar, num) {
+    if (checkedChar.xp > num) {
+      checkedChar.lvl = checkedChar.lvl + 1;
+      checkedChar.xp = checkedChar.xp - num;
+      checkedChar.skillpoints = checkedChar.skillpoints + 2;
+    }
+  }
+
   function menuClick() {
     console.log("KATT")
   }
 
+  function nextRound(oneChar) {
+    setEndDayChar(charList[oneChar.index]);
+    SetForceRefresh(!ForceRefresh);
+  }
+
   function AdvanceTime() {
     setNumShown(0);
-    if (env.DayTime == false) {
-      env.nrOfDay = env.nrOfDay + 1
+    console.log(charList)
+    if (charList[0].Questing == "Quest") {
+      quest.recipent = charList[0].name;
+      quest.giver = villageBuilding[charList[0].occupies - 1].giver;
+      quest.area = quest.areas[rand];
     }
-    env.DayTime = !env.DayTime
-    setDay(!Day)
-    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = ""));
-    villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
-      element.occupant2 = -1, element.slot2 = false));
-    SetForceRefresh(!ForceRefresh)
-    setCharlist(charList);
-    console.log(charList);
+    setEndOfDayShown(true);
   }
 
   return (
     <Router >
-      <div>{numShown != "0" && (<CardDiv><CharCard Katt={() => setNumShown(0)} myContent={passedContent} /></CardDiv>)}</div>
+      {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest}
+        forceRefresh={ForceRefresh} rand2={rand2} endDone={endDone} nextRound={nextRound}
+        rand={rand} updateStats={updateStats} buildings = {villageBuilding} env={env} />}
+      <div>{numShown != "0" && (<CardDiv><CharCard increaseStat = {increaseStat} Katt={() => setNumShown(0)} myContent={passedContent} /></CardDiv>)}</div>
       <NextDayDiv>
         <ButtonNextDay text="Advance time" Clicked={AdvanceTime} />
       </NextDayDiv>
@@ -148,23 +225,3 @@ function App() {
 }
 
 export default App;
-
-/*
-
-  function leavesPost(num) {
-  let answer = [];
-  for (let i = 0; i < isFreeArray.length; i++) {
-    i == num ? answer.push(true) : answer.push(isFreeArray[i]);
-  }
-  setIsFreeArray(answer);}
-
-  function emptyIt(num) {
-    let answer = [];
-  for (let i = 0; i < isFreeArray.length; i++) {
-    i == num - 1 ? answer.push(false) : answer.push(isFreeArray[i]);
-  }
-  setIsFreeArray(answer);}
-
-  emptyIt = {emptyIt}
-  leavesPost = {leavesPost}
-*/

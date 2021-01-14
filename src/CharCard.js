@@ -58,7 +58,7 @@ text-align: center;
 margin-top: -10vh;
 `;
 
-function CharCard({myContent, Katt}) {
+function CharCard({myContent, Katt, increaseStat}) {
 
     return (
         <KartyaDiv className = {myContent.classname}>
@@ -73,11 +73,13 @@ function CharCard({myContent, Katt}) {
             {myContent.name}
         </NameDiv>
         <StatInner>
-        <div>STR: {myContent.strength}</div>
-        <div>CON: {myContent.constitution}</div>
-        <div>DXT: {myContent.dexterity}</div>
-        <div>INT: {myContent.intelligence}</div>
-        <div>CHR: {myContent.charisma}</div>
+        {myContent.skillpoints > 0 ? <div>Level up! {myContent.skillpoints} </div> : <div> Level: {myContent.lvl}</div>}
+        <div>Experience: {myContent.xp}</div>
+        <div onClick = {() => increaseStat("strength", myContent)}>STR: {myContent.strength}</div>
+        <div onClick = {() => increaseStat("constitution", myContent)}>CON: {myContent.constitution}</div>
+        <div onClick = {() => increaseStat("dexterity", myContent)}>DXT: {myContent.dexterity}</div>
+        <div onClick = {() => increaseStat("intelligence", myContent)}>INT: {myContent.intelligence}</div>
+        <div onClick = {() => increaseStat("charisma", myContent)}>CHR: {myContent.charisma}</div>
         </StatInner>
         </Statistics>
         <div>

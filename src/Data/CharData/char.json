@@ -18,7 +18,9 @@
         "isFree": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none"
+        "Questing": "none",
+        "xp": 0,
+        "lvl": 1
     },
     {
         "index": 2,
@@ -39,7 +41,9 @@
         "isFree": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none"
+        "Questing": "none",
+        "xp": 0,
+        "lvl": 1
     },
     {
         "index": 3,
@@ -60,7 +64,9 @@
         "isFree": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none"
+        "Questing": "none",
+        "xp": 0,
+        "lvl": 1
     },
     {
         "index": 4,
@@ -81,7 +87,9 @@
         "isFree": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none"
+        "Questing": "none",
+        "xp": 0,
+        "lvl": 1
     }
     
 ]
