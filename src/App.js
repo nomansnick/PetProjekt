@@ -20,7 +20,8 @@ import Env from "./Data/EnvData/env.json";
 import ButtonNextDay from "./ButtonNextDay";
 import EndOfDayEvent from "./EndOfDayEvent";
 import {Quest} from "./QuestAndEnemy/QuestV2";
-import {getHealth, getMaxHealth} from "./Data/CharData/charStatFunctions"
+import {getHealth, getMaxHealth} from "./Data/CharData/charStatFunctions";
+import inventory from "./Data/EnvData/inventory.json";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
   const [endDayChar, setEndDayChar] = useState(charList[0])
   const [rand, setRand] = useState();
   const [rand2, setRand2] = useState();
+  const [inv, setInv] = useState(inventory);
 
   let random;
 
@@ -193,6 +195,12 @@ function App() {
     setEndOfDayShown(true);
   }
 
+  function purchase(oneItem) {
+    env.Gold = env.Gold - oneItem.price;
+    inv.push(oneItem);
+    setInv(inv);
+  }
+
   return (
     <Router >
       {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest}
@@ -238,6 +246,9 @@ function App() {
                   Day={Day}
                   ForceRefresh={ForceRefresh}
                   onClick={() => SetForceRefresh(!ForceRefresh)}
+                  env = {env}
+                  inv = {inv}
+                  purchase = {purchase}
                 />
               </Route>*/
                   <Route path="/">

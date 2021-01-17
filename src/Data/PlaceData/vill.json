@@ -30,8 +30,9 @@
     "index": 2,
     "giver": "Guildmaster Zhival Tarlesten"
 },
+
 {   "name": "Store",
-    "desc": "'Don't be cheap when it comes to protection. You'll regret buying that lousy helmet when an axe splits your head!'",
+    "desc": "'Don't be cheap when it comes to adventures. You'll regret not buying that potion!'",
     "desc2": "Mugas Ruktar, Orcish Berserker",
     "desc3": "Open from dawn to dusk!",
     "isQuestGiver": false,
