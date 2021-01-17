@@ -78,7 +78,10 @@ function App() {
   function challengeSuccessfulStat(charToChange, usedQuest, num1, num2, num3) {
   env.gold = env.gold + usedQuest.rewardGold + num1;
   charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp + num2;
-  charList[charToChange.index-1].health = charList[charToChange.index-1].health + num3};
+  charList[charToChange.index-1].health = charList[charToChange.index-1].health + num3
+  charList[charToChange.index-1].occupies == 1 ? env.Villagers = env.Villagers + 5 : env.Guild = env.Guild + 5;
+  setEnv(env);
+};
 
   function challengeFailStat(charToChange, usedQuest) {
   charList[charToChange.index-1].health = charList[charToChange.index-1].health - 60;
@@ -216,6 +219,8 @@ function App() {
             <LeftLower>
               <div>Number of Days: {env.nrOfDay}</div>
               <div>{Day ? "The sun is high on the sky" : "The moon shines palely"}</div>
+              <div>Standing with Villagers: {env.Villagers}</div>
+              <div>Standing with Guild: {env.Guild}</div>
             </LeftLower>
           </Left>
           <Right>

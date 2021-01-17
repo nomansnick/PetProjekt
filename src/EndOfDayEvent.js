@@ -9,7 +9,7 @@ position: absolute;
 background-color: rgba(100,100,100,0.4);
 height: 100%;
 width: 99%;
-z-index: 4;
+z-index: 6;
 `;
 
 const BlockerMini = styled.div`

@@ -31,7 +31,7 @@ function Navi() {
     <LinkDiv>
     <OneItem><Link to="/" style={setting}>Your Camp</Link></OneItem>
     <OneItem><Link to="/village" style={setting}>The Village</Link></OneItem>
-    <OneItem><Link to="/fields" style={setting}>The Fields</Link></OneItem>
+    <OneItem><Link to="/tournament" style={setting}>Tournament</Link></OneItem>
   </LinkDiv>)
 }
 
