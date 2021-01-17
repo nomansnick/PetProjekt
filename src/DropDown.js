@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import ButtonGeneric from "./ButtonGeneric";
 import styled from "styled-components";
 import "./App.css";
+import {getHealth } from "./Data/CharData/charStatFunctions"
 
 const DropDownDiv = styled.div`
 display: flex;
@@ -50,9 +51,7 @@ function DropDown (props) {
     }
     
     function CharClicked(iterated, Place) {
-        if (isUsed) {
-        }
-        else {
+        if (!isUsed && getHealth(iterated) > 60) {
             dropDownCharClicked(iterated, Place, typ);
             setIsShown(false);
         }

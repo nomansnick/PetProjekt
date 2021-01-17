@@ -1,0 +1,46 @@
+[
+    {
+        "type": "Fighter",
+        "health": 150,
+        "maxHealth": 150,
+        "strength": 6,
+        "constitutio": 6,
+        "dexterity": 1,
+        "intelligence": 1,
+        "charisma": 1,
+        "race": "Human"
+    },
+    {
+        "type": "Defender",
+        "hp": 175,
+        "maxHp": 175,
+        "strength": 4,
+        "constitution": 8,
+        "dexterity": 1,
+        "intelligence": 1,
+        "charisma": 1,
+        "race": "Human"
+    },
+    {
+        "type": "Rogue",
+        "hp": 120,
+        "maxHp": 120,
+        "strength": 1,
+        "constitution": 1,
+        "dexterity": 7,
+        "intelligence": 1,
+        "charisma": 5,
+        "race": "Human"
+    },
+    {
+        "type": "Sorcerer",
+        "hp": 90,
+        "maxHp": 90,
+        "strength": 1,
+        "constitution": 4,
+        "dexterity": 1,
+        "intelligence": 8,
+        "charisma": 1,
+        "race": "Human"
+    }
+]

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import {getHealth, getMaxHealth} from "./Data/CharData/charStatFunctions"
 
 const FrameCharList = styled.div`
 display: flex;
@@ -15,7 +16,8 @@ function Characters(props) {
         <FrameCharList>
                 {charlist.map(iterated =>
                 (<div key={iterated.index} onClick={() => SideCharClick(iterated)}>
-                    {iterated.classname}
+                    <div>{iterated.name}</div>
+                    <div>{getHealth(iterated)}/{getMaxHealth(iterated)}</div>
                 </div>
                 ))}
         </FrameCharList>

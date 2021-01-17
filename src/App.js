@@ -10,7 +10,7 @@ import CharCard from "./CharCard";
 import Menu from "./Menu";
 import Navi from "./Navi";
 import Camp from "./Camp";
-import Fields from "./Fields";
+import Tournament from "./Tournament";
 import Village from "./Village";
 import Characters from "./Characters";
 import { OverLay, CardDiv, Frame, TopShelf, LeftLower, TopLeft, LeftUpper, TopRight, MainBody, Left, Right, NextDayDiv } from "./styledCollection";
@@ -20,6 +20,7 @@ import Env from "./Data/EnvData/env.json";
 import ButtonNextDay from "./ButtonNextDay";
 import EndOfDayEvent from "./EndOfDayEvent";
 import {Quest} from "./QuestAndEnemy/QuestV2";
+import {getHealth, getMaxHealth} from "./Data/CharData/charStatFunctions"
 
 
 function App() {
@@ -74,6 +75,15 @@ function App() {
     }
   }
 
+  function challengeSuccessfulStat(charToChange, usedQuest) {
+  env.gold = env.gold + usedQuest.rewardGold + 75;
+  charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp + 25;
+  charList[charToChange.index-1].health = charList[charToChange.index-1].health - 20}
+
+  function challengeFailStat(charToChange, usedQuest) {
+  charList[charToChange.index-1].health = charList[charToChange.index-1].health - 60;
+  charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp - 10;}
+
   function updateStats(oneChar) {
     console.log("ebből: " , oneChar)
     charList[oneChar.index - 1] = oneChar;
@@ -83,12 +93,12 @@ function App() {
 
   function endDone() {
     setEndOfDayShown(false);
-    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = ""));
+    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = "", levelUp(element),
+    getHealth(element) < getMaxHealth(element) - 26 ? element.health = element.health + 25 : element.health = element.maxHealth) );
     setDay(!Day)
     villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
       element.occupant2 = -1, element.slot2 = false));
     SetForceRefresh(!ForceRefresh);
-    charList.forEach(element => levelUp(element));
     setCharlist(charList);
     !env.DayTime ? env.nrOfDay = env.nrOfDay + 1 : env.nrOfDay = env.nrOfDay;
     env.DayTime = !env.DayTime;
@@ -172,6 +182,7 @@ function App() {
     <Router >
       {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest}
         forceRefresh={ForceRefresh} rand2={rand2} endDone={endDone} nextRound={nextRound}
+        challengeSuccessfulStat={challengeSuccessfulStat} challengeFailStat= {challengeFailStat}
         rand={rand} updateStats={updateStats} buildings = {villageBuilding} env={env} />}
       <div>{numShown != "0" && (<CardDiv><CharCard increaseStat = {increaseStat} Katt={() => setNumShown(0)} myContent={passedContent} /></CardDiv>)}</div>
       <NextDayDiv>
@@ -197,8 +208,8 @@ function App() {
           </Left>
           <Right>
             <Switch>
-              <Route path="/fields">
-                <Fields
+              <Route path="/tournament">
+                <Tournament
                 />
               </Route>
               <Route path="/village">

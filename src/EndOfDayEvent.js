@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ButtonGeneric from "./ButtonGeneric";
 import { questStarted, questDoneText, found, challenges, challengesSuccess, challengeFail, success, fail } from "./QuestAndEnemy/QuestV2";
+import { racialBonus } from "./Data/CharData/charStatFunctions";
 
 const Blocker = styled.div`
 position: absolute;
@@ -61,7 +62,7 @@ background-color: grey;
 `;
 
 function EndOfDayEvent(props) {
-    const { char, quest, forceRefresh, updateStats, buildings, endDone, nextRound, env } = props
+    const { char, quest, forceRefresh, updateStats, challengeSuccessfulStat, challengeFailStat, buildings, endDone, nextRound, env } = props
     const [challenge, setChallenge] = useState(false)
     const [shown, IsShown] = useState(false)
     const [chalSuccess, setSuccess] = useState(false)
@@ -84,63 +85,56 @@ function EndOfDayEvent(props) {
     function challangeSetter(oneCharSetter) {
         setRecipent(oneCharSetter.name);
         random = Math.floor(Math.random() * Math.floor(3))
+        console.log("Random: " + random)
         setEnemy(usedQuest.enemies[random]);
+        CheckedStatChecker(usedQuest.enemies[random], oneCharSetter);
         random = Math.floor(Math.random() * Math.floor(3))
         setArea(usedQuest.areas[random]);
         random = Math.floor(Math.random() * Math.floor(3))
-        setUsedRand(random)
+        setUsedRand(random + 1)
         setGiver(buildings[oneCharSetter.occupies - 1].giver)
     }
 
-    function challengeAccepted(oneCharAcc) {
+    function challengeAccepted(oneCharAcc, usedQuest) {
         challangeSetter(oneCharAcc)
-        CheckedStatChecker();
         setChallenge(true);
-        racialBonus(oneCharAcc.race, 1, 2)
-        oneCharAcc[checkedStat] > quest.checkedStat ? setSuccess(true) : setSuccess(false);
-        racialBonus(oneCharAcc.race, -1, -2)
-        challengeEffect()
+        challengeEffect(oneCharAcc, usedQuest)
         IsShown(true);
     }
 
-    function CheckedStatChecker() {
-        enemy == "hermit" ? setCheckedStat("intelligence") : enemy == "thief"
-            ? setCheckedStat("dexterity") : setCheckedStat("strength")
-    }
 
-    function challengeEffect() {
-        if (chalSuccess) {
-            usedEnv.gold = usedEnv.gold + usedQuest.rewardGold + 75;
-            oneChar.xp = oneChar.xp + usedQuest.rewardXp + 25;
-            oneChar.hp > 20 ? oneChar.hp = oneChar.hp - 20 : oneChar.hp = 1;
-        } else {
-            oneChar.hp > 60 ? oneChar.hp = oneChar.hp - 60 : oneChar.hp = 1;
-            oneChar.xp = oneChar.xp + usedQuest.rewardXp - 10;
+    function CheckedStatChecker(string, oneCharAcc) {
+        if (string == "hermit") {
+            statCheckerToSuccessChecker("intelligence", oneCharAcc);
+            return;
+        }
+        if (string == "thief") {
+            statCheckerToSuccessChecker("dexterity", oneCharAcc);
+            return;
+        }
+        else {
+            statCheckerToSuccessChecker("strength", oneCharAcc);
         }
     }
 
-    function racialBonus(string, num1, num2) {
-        switch (string) {
-            case "elf":
-                oneChar.dexterity = oneChar.dexterity + num1;
-                oneChar.intelligence = oneChar.intelligence + num2;
-                oneChar.charisma = oneChar.charisma + num1;
-                break;
-            case "dwarf":
-                oneChar.intelligence = oneChar.intelligence + num1;
-                oneChar.constitution = oneChar.constitution + num2;
-                oneChar.strength = oneChar.strength + num1;
-                break;
-            case "human":
-                oneChar.dexterity = oneChar.intelligence + num1;
-                oneChar.strength = oneChar.constitution + num2;
-                oneChar.charisma = oneChar.strength + num1;
-                break;
-            case "fay":
-                oneChar.intelligence = oneChar.intelligence + num1;
-                oneChar.constitution = oneChar.constitution + num2;
-                oneChar.dexterity = oneChar.dexterity + num1;
-                break;
+    function statCheckerToSuccessChecker(statType, oneCharAcc) {
+        setCheckedStat(statType);
+        SuccessChecker(oneCharAcc, statType)
+    }
+
+    function SuccessChecker(oneCharCheck, stat) {
+        if (oneCharCheck[stat] + racialBonus(oneCharCheck.race, stat) > quest.checkedStat) {
+            setSuccess(true)
+            return;
+        }
+        setSuccess(false);
+    }
+
+    function challengeEffect(chartoChange, usedQuest) {
+        if (chalSuccess) {
+            challengeSuccessfulStat(chartoChange, usedQuest)
+        } else {
+            challengeFailStat(chartoChange, usedQuest)
         }
     }
 
@@ -187,7 +181,7 @@ function EndOfDayEvent(props) {
                     {oneChar.Questing == "Quest" && !shown && !updating &&
                         <RestDiv>
                             <div> {questStarted(oneChar.name, quest.areas[Math.floor(Math.random() * Math.floor(3))])} </div>
-                            <div><ButtonGeneric text="Attempt challenge" Clicked={() => challengeAccepted(oneChar)} /></div>
+                            <div><ButtonGeneric text="Attempt challenge" Clicked={() => challengeAccepted(oneChar, usedQuest)} /></div>
                             <div><ButtonGeneric text="Avoid challenge" Clicked={() => challengeSkipped(oneChar)} /></div>
                         </RestDiv>}
                     <QuestDiv>

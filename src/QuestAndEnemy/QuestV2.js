@@ -47,7 +47,7 @@ function challengesSuccess(enemy, recipent, num) {
         case "hermit": switch (num) {
             case 1: return "'The day, and the night,' says " + recipent + ". \n The hermit nods his head in approval, and hands " + recipent + " the trinkets sought."
             case 2: return "'A road,' says " + recipent + ". \n The hermit nods his head in approval, and hands " + recipent + " the trinkets sought."
-            case 3: return "'A map.,' said " + recipent + ". \n The hermit nods his head in approval, and hands " + recipent + " the trinkets sought."
+            case 3: return "'A map,' says " + recipent + ". \n The hermit nods his head in approval, and hands " + recipent + " the trinkets sought."
         }
         case "wolf": switch (num) {
             case 1: return "" + recipent + " manages not only to avoid the vicious wolf, but also to end its miserable life."
@@ -65,9 +65,9 @@ function challengesSuccess(enemy, recipent, num) {
 function challengeFail(enemy, recipent, num) {
     switch (enemy) {
         case "hermit": switch (num) {
-            case 1: return "'I haven't the slightest clue,' admitted " + recipent + ". \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
-            case 2: return "'Give me a break, old man!' " + recipent + ". \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
-            case 3: return "'A delusional hermit?'" + recipent + " asked. \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
+            case 1: return "'I haven't the slightest clue,' admits " + recipent + ". \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
+            case 2: return "'Give me a break, old man!' " + recipent + "exclaims. \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
+            case 3: return "'A delusional hermit?'" + recipent + " asks. \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
         }
         case "wolf": switch (num) {
             case 1: return "The wolf's teeth leave a bloody mark, and " + recipent + " decides to flee. It's pointless to linger around for another!"
