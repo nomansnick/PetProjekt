@@ -76,91 +76,91 @@ function EndOfDayEvent(props) {
     const [giver, setGiver] = useState();
     const [recipent, setRecipent] = useState();
     const [area, setArea] = useState();
+    const [challengeDone, setChallengeDone] = useState(false)
 
     useEffect(() => { setUsedQuest(quest) }, [forceRefresh])
     useEffect(() => { setOneChar(char) }, [forceRefresh])
 
     let random;
 
-    function challangeSetter(oneCharSetter) {
-        setRecipent(oneCharSetter.name);
-        random = Math.floor(Math.random() * Math.floor(3))
-        console.log("Random: " + random)
-        setEnemy(usedQuest.enemies[random]);
-        CheckedStatChecker(usedQuest.enemies[random], oneCharSetter);
-        random = Math.floor(Math.random() * Math.floor(3))
-        setArea(usedQuest.areas[random]);
+    function challengeAccepted(oneCharAcc, usedQuest) {
         random = Math.floor(Math.random() * Math.floor(3))
         setUsedRand(random + 1)
-        setGiver(buildings[oneCharSetter.occupies - 1].giver)
-    }
-
-    function challengeAccepted(oneCharAcc, usedQuest) {
-        challangeSetter(oneCharAcc)
         setChallenge(true);
-        challengeEffect(oneCharAcc, usedQuest)
         IsShown(true);
+        questSetter(oneCharAcc, usedQuest, true);
     }
 
 
-    function CheckedStatChecker(string, oneCharAcc) {
+    function CheckedStatChecker(string, oneCharAcc, usedQuest) {
+        console.log("csekkelek")
         if (string == "hermit") {
-            statCheckerToSuccessChecker("intelligence", oneCharAcc);
+            statCheckerToSuccessChecker("intelligence", oneCharAcc, usedQuest);
             return;
         }
         if (string == "thief") {
-            statCheckerToSuccessChecker("dexterity", oneCharAcc);
+            statCheckerToSuccessChecker("dexterity", oneCharAcc, usedQuest);
             return;
         }
-        else {
-            statCheckerToSuccessChecker("strength", oneCharAcc);
-        }
-    }
+        console.log("ideertem")
+        statCheckerToSuccessChecker("strength", oneCharAcc, usedQuest);
 
-    function statCheckerToSuccessChecker(statType, oneCharAcc) {
+}
+
+    function statCheckerToSuccessChecker(statType, oneCharAcc, usedQuest) {
         setCheckedStat(statType);
-        SuccessChecker(oneCharAcc, statType)
+        SuccessChecker(oneCharAcc, statType, usedQuest)
     }
 
-    function SuccessChecker(oneCharCheck, stat) {
-        if (oneCharCheck[stat] + racialBonus(oneCharCheck.race, stat) > quest.checkedStat) {
-            setSuccess(true)
+    function SuccessChecker(oneCharCheck, stat, usedQuest) {
+        if (oneCharCheck[stat] + racialBonus(oneCharCheck.race, stat) > usedQuest.checkedStat) {
+            setSuccess(true);
+            setChallengeDone(true);
+            challengeSuccessfulStat(oneCharCheck, usedQuest, 75, 25, -20);
             return;
         }
         setSuccess(false);
+        setChallengeDone(true);
+        challengeFailStat(oneCharCheck, usedQuest)
     }
 
-    function challengeEffect(chartoChange, usedQuest) {
-        if (chalSuccess) {
-            challengeSuccessfulStat(chartoChange, usedQuest)
-        } else {
-            challengeFailStat(chartoChange, usedQuest)
+    function challengeSkipped(oneCharSk, usedQuest) {
+        questSetter(oneCharSk, usedQuest, false);
+    }
+
+    function questSetter(oneChar, usedQuest, bool) {
+        setRecipent(oneChar.name);
+        random = Math.floor(Math.random() * Math.floor(3))
+        setArea(usedQuest.areas[random]);
+        random = Math.floor(Math.random() * Math.floor(3))
+        setGiver(buildings[oneChar.occupies - 1].giver);
+        random = Math.floor(Math.random() * Math.floor(3))
+        setEnemy(usedQuest.enemies[random]);
+        if (bool == true) {
+            CheckedStatChecker(usedQuest.enemies[random], oneChar, usedQuest)
+            return;
         }
-    }
-
-    function challengeSkipped(oneCharSk) {
-        challangeSetter(oneCharSk)
-        console.log("SKIPPED")
-        usedEnv.gold = usedEnv.gold + usedQuest.rewardGold;
-        oneCharSk.xp = oneCharSk.xp + usedQuest.rewardXp;
-        oneCharSk.hp > 20 ? oneCharSk.hp = oneCharSk.hp - 20 : oneCharSk.hp = 1;
-        setChallenge(false);
-        IsShown(true);
+        else {
+            console.log(bool)
+            IsShown(true);
+            setChallenge(false);
+            challengeSuccessfulStat(oneChar, usedQuest, 0, 0, -20);
+        }
     }
 
     function nextOne(oneChar) {
         setUpdating(true);
         setChallenge(false);
+        setChallengeDone(false);
+        IsShown(false)
         if (oneChar.index != 4) {
             updateStats(oneChar)
             nextRound(oneChar)
-            IsShown(false)
             setUpdating(false);
         }
         else {
             setUpdating(false);
             updateStats(oneChar);
-            IsShown(false)
             endDone();
         }
     }
@@ -182,7 +182,7 @@ function EndOfDayEvent(props) {
                         <RestDiv>
                             <div> {questStarted(oneChar.name, quest.areas[Math.floor(Math.random() * Math.floor(3))])} </div>
                             <div><ButtonGeneric text="Attempt challenge" Clicked={() => challengeAccepted(oneChar, usedQuest)} /></div>
-                            <div><ButtonGeneric text="Avoid challenge" Clicked={() => challengeSkipped(oneChar)} /></div>
+                            <div><ButtonGeneric text="Avoid challenge" Clicked={() => challengeSkipped(oneChar, usedQuest)} /></div>
                         </RestDiv>}
                     <QuestDiv>
                         {shown && challenge &&
@@ -203,14 +203,14 @@ function EndOfDayEvent(props) {
                                 </div>
                             </QuestItem>
                         }
-                        {shown ? <QuestItem>
+                        {shown && (!challenge || challengeDone ) && <QuestItem>
                             <div>
                                 {questDoneText(recipent, giver)}
                             </div>
                             <div>
                                 <ButtonGeneric text="I see." Clicked={() => nextOne(oneChar)} />
                             </div>
-                        </QuestItem> : <div />}
+                        </QuestItem>}
                     </QuestDiv>
                 </FrameQuest>
             </FrameEndDay>

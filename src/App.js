@@ -75,10 +75,10 @@ function App() {
     }
   }
 
-  function challengeSuccessfulStat(charToChange, usedQuest) {
-  env.gold = env.gold + usedQuest.rewardGold + 75;
-  charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp + 25;
-  charList[charToChange.index-1].health = charList[charToChange.index-1].health - 20}
+  function challengeSuccessfulStat(charToChange, usedQuest, num1, num2, num3) {
+  env.gold = env.gold + usedQuest.rewardGold + num1;
+  charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp + num2;
+  charList[charToChange.index-1].health = charList[charToChange.index-1].health + num3};
 
   function challengeFailStat(charToChange, usedQuest) {
   charList[charToChange.index-1].health = charList[charToChange.index-1].health - 60;
@@ -93,17 +93,29 @@ function App() {
 
   function endDone() {
     setEndOfDayShown(false);
-    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = "", levelUp(element),
-    getHealth(element) < getMaxHealth(element) - 26 ? element.health = element.health + 25 : element.health = element.maxHealth) );
-    setDay(!Day)
-    villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
-      element.occupant2 = -1, element.slot2 = false));
+    endOfDayFreeThePeople();
+    endOfDayFreeThePlaces();
     SetForceRefresh(!ForceRefresh);
     setCharlist(charList);
-    !env.DayTime ? env.nrOfDay = env.nrOfDay + 1 : env.nrOfDay = env.nrOfDay;
-    env.DayTime = !env.DayTime;
+    endofDayDayChanges();
     setEndDayChar(charList[0]);
   };
+
+  function endOfDayFreeThePeople() {
+    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = "", levelUp(element),
+    getHealth(element) < getMaxHealth(element) - 26 ? element.health = element.health + 25 : element.health = element.maxHealth) );
+  }
+
+  function endOfDayFreeThePlaces() {
+    villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
+      element.occupant2 = -1, element.slot2 = false));
+  }
+
+  function endofDayDayChanges() {
+    !env.DayTime ? env.nrOfDay = env.nrOfDay + 1 : env.nrOfDay = env.nrOfDay;
+    env.DayTime = !env.DayTime;
+    setDay(!Day)
+  }
 
   function SideCharClick(content) {
     setNumShown(content.index);

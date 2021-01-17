@@ -3,8 +3,8 @@ const Quest = {
     rewardXp: 25,
     hpLoss: 40,
     checkedStat: 5,
-    areas: ["the hills", "the woods", "the fields"],
-    enemies: ["hermit", "thief", "wolf"],
+    areas: ["the hills", "the woods", "the fields",],
+    enemies: ["hermit", "thief", "wolf",],
 }
 
 function questStarted(recipent, area) { return "" + recipent + " has left for " + area + "." }
