@@ -51,10 +51,11 @@ function DropDown (props) {
     }
     
     function CharClicked(iterated, Place) {
-        if (!isUsed && getHealth(iterated) > 60) {
+        if (getHealth(iterated) < 60 || !iterated.rested) {
+            return;
+        }
             dropDownCharClicked(iterated, Place, typ);
             setIsShown(false);
-        }
     }
 
     return (

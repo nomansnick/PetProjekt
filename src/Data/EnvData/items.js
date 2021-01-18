@@ -1,5 +1,6 @@
 const ItemList = [
     {
+        id: 1,
         item: "Health Potion",
         type: "consumable",
         upgrade: false,
@@ -8,6 +9,7 @@ const ItemList = [
         price: 50,
     },
     {
+        id: 2,
         item: "Wooden Pikes",
         type: "fortification",
         upgrade: true,
@@ -16,6 +18,7 @@ const ItemList = [
         price: 500,
     },
     {
+        id: 3,
         item: "Traps",
         type: "concealment",
         upgrade: true,
@@ -24,6 +27,7 @@ const ItemList = [
         price: 500,
     },
     {
+        id: 4,
         item: "Food",
         type: "essential",
         upgrade: false,
@@ -31,6 +35,7 @@ const ItemList = [
         price: 25,
     },
     {
+        id: 5,
         item: "Guards",
         type: "fortification",
         upgrade: true,
@@ -41,6 +46,7 @@ const ItemList = [
         price: 1000,
     },
     {
+        id: 6,
         item: "Garden",
         type: "either",
         upgrade: true,
@@ -51,6 +57,7 @@ const ItemList = [
         price: 1000,
     },
     {
+        id: 7,
         item: "Toolkit",
         type: "either",
         upgrade: true,

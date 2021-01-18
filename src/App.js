@@ -90,9 +90,7 @@ function App() {
   charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp - 10;}
 
   function updateStats(oneChar) {
-    console.log("ebből: " , oneChar)
     charList[oneChar.index - 1] = oneChar;
-    console.log("ez: " , charList[oneChar.index - 1])
     setCharlist(charList);
   };
 
@@ -107,7 +105,8 @@ function App() {
   };
 
   function endOfDayFreeThePeople() {
-    charList.forEach(element => (element.occupies = -1, element.isFree = true, element.Questing = "", levelUp(element),
+    charList.forEach(element => (element.occupies = -1, element.isFree = true, (element.Questing == "" ?
+    element.rested = true : element.rested = false), element.Questing = "", levelUp(element),
     getHealth(element) < getMaxHealth(element) - 26 ? element.health = element.health + 25 : element.health = element.maxHealth) );
   }
 

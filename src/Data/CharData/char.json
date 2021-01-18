@@ -16,9 +16,10 @@
         "exp": 0,
         "karma": 0,
         "isFree": true,
+        "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none",
+        "Questing": "",
         "xp": 0,
         "lvl": 1
     },
@@ -39,9 +40,10 @@
         "exp": 0,
         "karma": 0,
         "isFree": true,
+        "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none",
+        "Questing": "",
         "xp": 0,
         "lvl": 1
     },
@@ -62,9 +64,10 @@
         "exp": 0,
         "karma": 0,
         "isFree": true,
+        "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none",
+        "Questing": "",
         "xp": 0,
         "lvl": 1
     },
@@ -85,9 +88,10 @@
         "exp": 0,
         "karma": 0,
         "isFree": true,
+        "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "none",
+        "Questing": "",
         "xp": 0,
         "lvl": 1
     }

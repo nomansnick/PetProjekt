@@ -3,9 +3,10 @@ import DropDown from "./DropDown";
 import { ItsClosed, BottomDv, ButtonDiv, Righty, Center, Title, OneBuilding, VillageDiv } from "./styledCollection"
 import Shop from "./Shop"
 import styled from "styled-components";
+import { getHealth } from "./Data/CharData/charStatFunctions";
 
 const PicStore = styled.div`
-height: 33%;
+height: 15%;
 `;
 
 function Village(props) {
@@ -19,7 +20,7 @@ function Village(props) {
                     <Center><Title>{OnePlace.name}</Title></Center>
                     {OnePlace.name == "Store"
                         ? <PicStore><Shop env={env} inv={inv} purchase={purchase} /></PicStore>
-                        : <PicStore>IdeJonAKep</PicStore>
+                        : <PicStore><div>IdeJonAKep</div></PicStore>
                     }
                     {Day && OnePlace.name == "Tavern"
                         || !Day && OnePlace.name == "Store"

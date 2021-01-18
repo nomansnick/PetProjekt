@@ -5,7 +5,7 @@ import ItemList from "./Data/EnvData/items";
 const FrameShop = styled.div`
 display: flex;
 margin-top: -15%;
-height: 150%;
+height: 250%;
 flex-direction: column;
 justify-content: space-around;
 text-align: center;
@@ -102,7 +102,7 @@ return (
         <ShopDiv>
             <Goods>
                 {items.map(oneItem => (
-                    <OneItem onClick={() => buy(oneItem)}>
+                    <OneItem key = {oneItem.id} onClick={() => buy(oneItem)}>
                         <div>{oneItem.item}</div>
                         <div>{oneItem.price}</div>
                     </OneItem>
