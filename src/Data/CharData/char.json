@@ -19,7 +19,7 @@
         "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "",
+        "Questing": " ",
         "xp": 0,
         "lvl": 1
     },
@@ -43,7 +43,7 @@
         "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "",
+        "Questing": " ",
         "xp": 0,
         "lvl": 1
     },
@@ -67,7 +67,7 @@
         "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "",
+        "Questing": " ",
         "xp": 0,
         "lvl": 1
     },
@@ -91,7 +91,7 @@
         "rested": true,
         "occupies": -1,
         "skillpoints": 0,
-        "Questing": "",
+        "Questing": " ",
         "xp": 0,
         "lvl": 1
     }

@@ -189,8 +189,6 @@ function EndOfDayEvent(props) {
         nextOne(oneChar)
     }
 
-
-
     return (
         <div>
             <FrameEndDay>
@@ -203,7 +201,7 @@ function EndOfDayEvent(props) {
                             <ButtonGeneric text="I see." Clicked={() => mingling(oneChar)} />
                         </RestDiv>
                         )}
-                    {oneChar.Questing == "" && !updating
+                    {oneChar.Questing == " " && !updating
                         && (<RestDiv>
                             <div>{oneChar.name} rests now.</div>
                             <ButtonGeneric text="I see." Clicked={() => resting(oneChar)} />

@@ -22,7 +22,7 @@ margin-top: 10%;
 `;
 
 function DropDown (props) {
-    const {text, OnePlace, charList, charMessage,
+    const {text, OnePlace, charList, charMessage, clearMessageBox,
         dropDownCharClicked, dropDownPlaceClicked,
         Day, ForceRefresh, typ, PassedOccupant, PassedUsed, buildings} = props
     const [isShown, setIsShown] = useState(false)
@@ -46,6 +46,7 @@ function DropDown (props) {
     }
         else {
             dropDownPlaceClicked(num, typ, OnePlace);
+            clearMessageBox(num);
         }
     }
     

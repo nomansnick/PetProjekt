@@ -10,7 +10,7 @@ height: 15%;
 `;
 
 function Village(props) {
-    const { buildings, charList, dropDownCharClicked, charMessage,
+    const { buildings, charList, dropDownCharClicked, charMessage, clearMessageBox,
         dropDownPlaceClicked, Day, ForceRefresh, env, inv, purchase } = props
 
 
@@ -19,7 +19,7 @@ function Village(props) {
             {buildings.slice(0, 3).map(OnePlace =>
                 <OneBuilding className={OnePlace.name} key={OnePlace.index}>
                     <Center><Title>{OnePlace.name}</Title></Center>
-                    {OnePlace.name == "Store"
+                    {OnePlace.name == "Store" && Day
                         ? <PicStore><Shop env={env} inv={inv} purchase={purchase} /></PicStore>
                         : <PicStore><div>IdeJonAKep</div></PicStore>
                     }
@@ -32,7 +32,7 @@ function Village(props) {
                                     dropDownPlaceClicked={dropDownPlaceClicked}
                                     dropDownCharClicked={dropDownCharClicked}
                                     ForceRefresh={ForceRefresh}
-                                    Day={Day}
+                                    Day={Day} clearMessageBox = {clearMessageBox}
                                     passedOccupant={OnePlace.occupant1}
                                     passedUsed={OnePlace.slot1}
                                     buildings={buildings}
@@ -43,7 +43,7 @@ function Village(props) {
                                 dropDownPlaceClicked={dropDownPlaceClicked}
                                 dropDownCharClicked={dropDownCharClicked}
                                 ForceRefresh={ForceRefresh}
-                                Day={Day}
+                                Day={Day} clearMessageBox = {clearMessageBox}
                                 passedOccupant={OnePlace.occupant2}
                                 passedUsed={OnePlace.slot2}
                                 buildings={buildings}

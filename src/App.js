@@ -36,17 +36,17 @@ function App() {
   const [ForceRefresh, SetForceRefresh] = useState(true);
   const [quest, setQuest] = useState(Quest);
   const [endOfdayShown, setEndOfDayShown] = useState(false)
-  const [checkedStat, setCheckedStat] = useState("");
+  const [checkedStat, setCheckedStat] = useState(" ");
   const [endDayChar, setEndDayChar] = useState(charList[0])
   const [rand, setRand] = useState();
   const [rand2, setRand2] = useState();
   const [inv, setInv] = useState(inventory);
-  const [messageBox, setMessageBox] = useState(["","","",""]) 
+  const [messageBox, setMessageBox] = useState([" "," "," "," "]) 
 
   let random;
 
   function dropDownPlaceClicked(num, type, onePlace) {
-    charUpdate(num - 1, true, -1, "")
+    charUpdate(num - 1, true, -1, " ")
     buildUpdate(type, onePlace.index - 1, false, -1)
     setCharlist(charList)
     SetForceRefresh(!ForceRefresh)
@@ -79,7 +79,7 @@ function App() {
   }
 
   function challengeSuccessfulStat(charToChange, usedQuest, num1, num2, num3) {
-  env.gold = env.gold + usedQuest.rewardGold + num1;
+  env.Gold = env.Gold + usedQuest.rewardGold + num1;
   charList[charToChange.index-1].xp = charToChange.xp + usedQuest.rewardXp + num2;
   charList[charToChange.index-1].health = charList[charToChange.index-1].health + num3
   charList[charToChange.index-1].occupies == 1 ? env.Villagers = env.Villagers + 5 : env.Guild = env.Guild + 5;
@@ -96,6 +96,7 @@ function App() {
   };
 
   function endDone() {
+    env.Threat = env.Threat + 5;
     setEndOfDayShown(false);
     endOfDayFreeThePeople();
     endOfDayFreeThePlaces();
@@ -106,8 +107,8 @@ function App() {
   };
 
   function endOfDayFreeThePeople() {
-    charList.forEach(element => (element.occupies = -1, element.isFree = true, (element.Questing == "" ?
-    element.rested = true : element.rested = false), element.Questing = "", levelUp(element),
+    charList.forEach(element => (element.occupies = -1, element.isFree = true, (element.Questing == " " ?
+    element.rested = true : element.rested = false), element.Questing = " ", levelUp(element),
     getHealth(element) < getMaxHealth(element) - 11 ? element.health = element.health + 10 : element.health = element.maxHealth) );
   }
 
@@ -117,9 +118,19 @@ function App() {
   }
 
   function endofDayDayChanges() {
-    !env.DayTime ? env.nrOfDay = env.nrOfDay + 1 : env.nrOfDay = env.nrOfDay;
+    if (!env.DayTime) {
+      env.nrOfDay = env.nrOfDay + 1;
+      if (env.Food < env.FoodConsumption) {
+        env.Food = 0;
+        charList.forEach(oneGuy =>(
+          oneGuy.health = oneGuy.health - 35
+        ));
+      }
+      env.Food = env.Food - env.FoodConsumption;
+    }
     env.DayTime = !env.DayTime;
-    setDay(!Day)
+    setEnv(env);
+    setDay(!Day);
   }
 
   function SideCharClick(content) {
@@ -197,9 +208,16 @@ function App() {
   }
 
   function purchase(oneItem) {
+    if (oneItem.item == "Food") {
+      env.Food = env.Food + 1;
+    }
+    else{
+      inv.push(oneItem);
+    }
     env.Gold = env.Gold - oneItem.price;
-    inv.push(oneItem);
+    setEnv(env);
     setInv(inv);
+    SetForceRefresh(!ForceRefresh)
   }
 
   function gainFactionPoint(faction, point) {
@@ -222,8 +240,8 @@ function App() {
     return " ";
 }
 
-function clearMessageBox(iterated) {
-  messageBox[iterated.index-1] = " ";
+function clearMessageBox(num) {
+  messageBox[num-1] = " ";
   SetForceRefresh(!ForceRefresh);
 }
 
@@ -256,6 +274,7 @@ function clearMessageBox(iterated) {
               <div>{Day ? "The sun is high on the sky" : "The moon shines palely"}</div>
               <div>Standing with Villagers: {env.Villagers}</div>
               <div>Standing with Guild: {env.Guild}</div>
+              <div>Gold: {env.Gold}</div>
             </LeftLower>
           </Left>
           <Right>
@@ -267,6 +286,7 @@ function clearMessageBox(iterated) {
               <Route path="/village">
                 <Village
                   charList={charList}
+                  clearMessageBox = {clearMessageBox}
                   buildings={villageBuilding}
                   dropDownPlaceClicked={dropDownPlaceClicked}
                   dropDownCharClicked={dropDownCharClicked}
@@ -281,6 +301,10 @@ function clearMessageBox(iterated) {
               </Route>*/
                   <Route path="/">
                 <Camp
+                  env = {env}
+                  dropDownPlaceClicked={dropDownPlaceClicked}
+                  dropDownCharClicked={dropDownCharClicked}
+                  inv = {inv}
                 />
               </Route>
             </Switch>

@@ -19,7 +19,7 @@ function Characters(props) {
         <FrameCharList>
                 {charlist.map(iterated =>
                 (<div key={iterated.index}>
-                    <div onClick = {() => clearMessageBox(iterated)}> {usedMessage[iterated.index-1]} </div>
+                    <div onClick = {() => clearMessageBox(iterated.index)}> {usedMessage[iterated.index-1]} </div>
                     <div onClick = {() => SideCharClick(iterated)}> {iterated.name} </div>
                     <div>{getHealth(iterated)}/{getMaxHealth(iterated)}</div>
                 </div>
