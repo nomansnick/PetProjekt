@@ -173,14 +173,14 @@ function EndOfDayEvent(props) {
 
     function mingling(oneChar) {
         if (oneChar.occupies != 2) {
-            if (oneChar.charisma + racialBonus(oneChar.race, "charima") > 7) {
+            if (oneChar.charisma + racialBonus(oneChar.race, "charisma") > 7) {
                 gainFactionPoint("Villagers", 20)
             } else {
                 gainFactionPoint("Villagers", 5)
             }
         }
         else {
-            if (oneChar.charisma + racialBonus(oneChar.race, "charima") > 7) {
+            if (oneChar.charisma + racialBonus(oneChar.race, "charisma") > 7) {
                 gainFactionPoint("Guild", 20)
             } else {
                 gainFactionPoint("Guild", 5)
