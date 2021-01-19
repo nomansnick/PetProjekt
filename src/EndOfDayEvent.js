@@ -62,7 +62,7 @@ background-color: grey;
 `;
 
 function EndOfDayEvent(props) {
-    const { char, quest, forceRefresh, updateStats, challengeSuccessfulStat, challengeFailStat, buildings, endDone, nextRound, env } = props
+    const { char, quest, gainFactionPoint, forceRefresh, updateStats, challengeSuccessfulStat, challengeFailStat, buildings, endDone, nextRound, env } = props
     const [challenge, setChallenge] = useState(false)
     const [shown, IsShown] = useState(false)
     const [chalSuccess, setSuccess] = useState(false)
@@ -103,7 +103,7 @@ function EndOfDayEvent(props) {
         }
         statCheckerToSuccessChecker("strength", oneCharAcc, usedQuest);
 
-}
+    }
 
     function statCheckerToSuccessChecker(statType, oneCharAcc, usedQuest) {
         setCheckedStat(statType);
@@ -165,11 +165,31 @@ function EndOfDayEvent(props) {
 
     function resting(oneChar) {
         getHealth(oneChar) < getMaxHealth(oneChar) - 31
-        ? oneChar.health = oneChar.health + 30
-        : oneChar.health = oneChar.maxHealth;
+            ? oneChar.health = oneChar.health + 30
+            : oneChar.health = oneChar.maxHealth;
         console.log("resting");
         nextOne(oneChar)
     }
+
+    function mingling(oneChar) {
+        if (oneChar.occupies != 2) {
+            if (oneChar.charisma + racialBonus(oneChar.race, "charima") > 7) {
+                gainFactionPoint("Villagers", 20)
+            } else {
+                gainFactionPoint("Villagers", 5)
+            }
+        }
+        else {
+            if (oneChar.charisma + racialBonus(oneChar.race, "charima") > 7) {
+                gainFactionPoint("Guild", 20)
+            } else {
+                gainFactionPoint("Guild", 5)
+            }
+        }
+        nextOne(oneChar)
+    }
+
+
 
     return (
         <div>
@@ -177,13 +197,17 @@ function EndOfDayEvent(props) {
                 <PicHolderDiv />
                 <FrameQuest>
                     {updating && <BlockerMini />}
-
+                    {oneChar.Questing == "Ming" && !updating
+                        && (<RestDiv>
+                            <div>{oneChar.name} mingles with the locals.</div>
+                            <ButtonGeneric text="I see." Clicked={() => mingling(oneChar)} />
+                        </RestDiv>
+                        )}
                     {oneChar.Questing == "" && !updating
                         && (<RestDiv>
                             <div>{oneChar.name} rests now.</div>
                             <ButtonGeneric text="I see." Clicked={() => resting(oneChar)} />
                         </RestDiv>
-
                         )}
                     {oneChar.Questing == "Quest" && !shown && !updating &&
                         <RestDiv>
@@ -210,7 +234,7 @@ function EndOfDayEvent(props) {
                                 </div>
                             </QuestItem>
                         }
-                        {shown && (!challenge || challengeDone ) && <QuestItem>
+                        {shown && (!challenge || challengeDone) && <QuestItem>
                             <div>
                                 {questDoneText(recipent, giver)}
                             </div>

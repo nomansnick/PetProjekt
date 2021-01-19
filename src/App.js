@@ -200,9 +200,14 @@ function App() {
     setInv(inv);
   }
 
+  function gainFactionPoint(faction, point) {
+    env[faction] = env[faction] + point
+    setEnv(env);
+  }
+
   return (
     <Router >
-      {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest}
+      {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest} gainFactionPoint = {gainFactionPoint}
         forceRefresh={ForceRefresh} rand2={rand2} endDone={endDone} nextRound={nextRound}
         challengeSuccessfulStat={challengeSuccessfulStat} challengeFailStat= {challengeFailStat}
         rand={rand} updateStats={updateStats} buildings = {villageBuilding} env={env} />}
