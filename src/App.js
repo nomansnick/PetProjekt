@@ -185,6 +185,7 @@ function App() {
   }
 
   function AdvanceTime() {
+    setMessageBox([" "," "," "," "])
     setNumShown(0);
     console.log(charList)
     if (charList[0].Questing == "Quest") {
@@ -208,18 +209,22 @@ function App() {
 
   function charMessage(state, oneChar) {
     switch(state) {
-        case "tired" : return messageBox[oneChar.index-1] = "I'm too tired for that!";
-        case "wounded" : return messageBox[oneChar.index-1] = "I have to recover first!";
-        case "taken" : return messageBox[oneChar.index-1] = "I'll do it.";
-        case "left" : return messageBox[oneChar.index-1] = "I'll do something else, I guess.";
+        case "tired" : messageBox[oneChar.index-1] = "I'm too tired for that!";
+        break;
+        case "wounded" : messageBox[oneChar.index-1] = "I have to recover first!";
+        break;
+        case "taken" : messageBox[oneChar.index-1] = "I'll do it.";
+        break;
+        case "left" : messageBox[oneChar.index-1] = "I'll do something else, I guess.";
+        break;
     }
-    return "";
+    SetForceRefresh(!ForceRefresh);
+    return " ";
 }
 
 function clearMessageBox(iterated) {
-  messageBox[iterated.index-1] = "";
+  messageBox[iterated.index-1] = " ";
   SetForceRefresh(!ForceRefresh);
-  setMessageBox(messageBox);
 }
 
   return (
