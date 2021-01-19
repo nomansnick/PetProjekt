@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {getHealth, getMaxHealth} from "./Data/CharData/charStatFunctions"
 
@@ -9,14 +9,18 @@ justify-content: space-around;
 `;
 
 function Characters(props) {
-    const { charlist, SideCharClick } = props
+    const { charlist, SideCharClick, messageBox, clearMessageBox, ForceRefresh } = props
+    const [usedMessage, setUsedMessage] = useState(messageBox)
+
+    useEffect (() => {setUsedMessage(messageBox)}, [ForceRefresh])
 
     return (
         <>
         <FrameCharList>
                 {charlist.map(iterated =>
-                (<div key={iterated.index} onClick={() => SideCharClick(iterated)}>
-                    <div>{iterated.name}</div>
+                (<div key={iterated.index}>
+                    <div onClick = {() => clearMessageBox(iterated)}> {usedMessage[iterated.index-1]} </div>
+                    <div onClick = {() => SideCharClick(iterated)}> {iterated.name} </div>
                     <div>{getHealth(iterated)}/{getMaxHealth(iterated)}</div>
                 </div>
                 ))}

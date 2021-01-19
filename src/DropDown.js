@@ -22,7 +22,7 @@ margin-top: 10%;
 `;
 
 function DropDown (props) {
-    const {text, OnePlace, charList,
+    const {text, OnePlace, charList, charMessage,
         dropDownCharClicked, dropDownPlaceClicked,
         Day, ForceRefresh, typ, PassedOccupant, PassedUsed, buildings} = props
     const [isShown, setIsShown] = useState(false)
@@ -45,15 +45,18 @@ function DropDown (props) {
         setIsShown(!isShown)
     }
         else {
-            console.log(OnePlace)
             dropDownPlaceClicked(num, typ, OnePlace);
         }
     }
     
     function CharClicked(iterated, Place) {
-        if (getHealth(iterated) < 60 || !iterated.rested) {
-            return;
+        if (getHealth(iterated) < 60) {
+            return charMessage("wounded", iterated)
         }
+        if (!iterated.rested) {
+            return charMessage("tired", iterated);
+        }
+            charMessage("taken", iterated);
             dropDownCharClicked(iterated, Place, typ);
             setIsShown(false);
     }

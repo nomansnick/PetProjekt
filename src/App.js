@@ -41,6 +41,7 @@ function App() {
   const [rand, setRand] = useState();
   const [rand2, setRand2] = useState();
   const [inv, setInv] = useState(inventory);
+  const [messageBox, setMessageBox] = useState(["","","",""]) 
 
   let random;
 
@@ -205,6 +206,22 @@ function App() {
     setEnv(env);
   }
 
+  function charMessage(state, oneChar) {
+    switch(state) {
+        case "tired" : return messageBox[oneChar.index-1] = "I'm too tired for that!";
+        case "wounded" : return messageBox[oneChar.index-1] = "I have to recover first!";
+        case "taken" : return messageBox[oneChar.index-1] = "I'll do it.";
+        case "left" : return messageBox[oneChar.index-1] = "I'll do something else, I guess.";
+    }
+    return "";
+}
+
+function clearMessageBox(iterated) {
+  messageBox[iterated.index-1] = "";
+  SetForceRefresh(!ForceRefresh);
+  setMessageBox(messageBox);
+}
+
   return (
     <Router >
       {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest} gainFactionPoint = {gainFactionPoint}
@@ -226,7 +243,8 @@ function App() {
           <OverLay className={env.DayTime ? "Day" : "Night"} />
           <Left>
             <LeftUpper>
-              <Characters SideCharClick={SideCharClick} charlist={charList} />
+              <Characters SideCharClick={SideCharClick} charlist={charList} ForceRefresh = {ForceRefresh}
+              messageBox = {messageBox} clearMessageBox = {clearMessageBox}/>
             </LeftUpper>
             <LeftLower>
               <div>Number of Days: {env.nrOfDay}</div>
@@ -253,6 +271,7 @@ function App() {
                   env = {env}
                   inv = {inv}
                   purchase = {purchase}
+                  charMessage = {charMessage}
                 />
               </Route>*/
                   <Route path="/">

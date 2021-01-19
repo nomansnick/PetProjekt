@@ -5,7 +5,7 @@ import ItemList from "./Data/EnvData/items";
 const FrameShop = styled.div`
 display: flex;
 margin-top: -15%;
-height: 250%;
+height: 200%;
 flex-direction: column;
 justify-content: space-around;
 text-align: center;

@@ -10,8 +10,9 @@ height: 15%;
 `;
 
 function Village(props) {
-    const { buildings, charList, dropDownCharClicked,
+    const { buildings, charList, dropDownCharClicked, charMessage,
         dropDownPlaceClicked, Day, ForceRefresh, env, inv, purchase } = props
+
 
     return (
         <VillageDiv>
@@ -35,6 +36,7 @@ function Village(props) {
                                     passedOccupant={OnePlace.occupant1}
                                     passedUsed={OnePlace.slot1}
                                     buildings={buildings}
+                                    charMessage = {charMessage}
                                     typ="Quest"
                                 />}
                             <DropDown text="Mingle" OnePlace={OnePlace} charList={charList}
@@ -45,6 +47,7 @@ function Village(props) {
                                 passedOccupant={OnePlace.occupant2}
                                 passedUsed={OnePlace.slot2}
                                 buildings={buildings}
+                                charMessage = {charMessage}
                                 typ="Ming"
                             />
                         </ButtonDiv>}
