@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ButtonGeneric from "./ButtonGeneric";
 import { questStarted, questDoneText, found, challenges, challengesSuccess, challengeFail, success, fail } from "./QuestAndEnemy/QuestV2";
-import { racialBonus } from "./Data/CharData/charStatFunctions";
+import { racialBonus, getHealth, getMaxHealth } from "./Data/CharData/charStatFunctions";
 
 const Blocker = styled.div`
 position: absolute;
@@ -93,7 +93,6 @@ function EndOfDayEvent(props) {
 
 
     function CheckedStatChecker(string, oneCharAcc, usedQuest) {
-        console.log("csekkelek")
         if (string == "hermit") {
             statCheckerToSuccessChecker("intelligence", oneCharAcc, usedQuest);
             return;
@@ -102,7 +101,6 @@ function EndOfDayEvent(props) {
             statCheckerToSuccessChecker("dexterity", oneCharAcc, usedQuest);
             return;
         }
-        console.log("ideertem")
         statCheckerToSuccessChecker("strength", oneCharAcc, usedQuest);
 
 }
@@ -165,16 +163,25 @@ function EndOfDayEvent(props) {
         }
     }
 
+    function resting(oneChar) {
+        getHealth(oneChar) < getMaxHealth(oneChar) - 31
+        ? oneChar.health = oneChar.health + 30
+        : oneChar.health = oneChar.maxHealth;
+        console.log("resting");
+        nextOne(oneChar)
+    }
+
     return (
         <div>
             <FrameEndDay>
                 <PicHolderDiv />
                 <FrameQuest>
                     {updating && <BlockerMini />}
-                    {oneChar.Questing != "Quest" && !updating
+
+                    {oneChar.Questing == "" && !updating
                         && (<RestDiv>
                             <div>{oneChar.name} rests now.</div>
-                            <ButtonGeneric text="I see." Clicked={() => nextOne(oneChar)} />
+                            <ButtonGeneric text="I see." Clicked={() => resting(oneChar)} />
                         </RestDiv>
 
                         )}

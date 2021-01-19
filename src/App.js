@@ -107,7 +107,7 @@ function App() {
   function endOfDayFreeThePeople() {
     charList.forEach(element => (element.occupies = -1, element.isFree = true, (element.Questing == "" ?
     element.rested = true : element.rested = false), element.Questing = "", levelUp(element),
-    getHealth(element) < getMaxHealth(element) - 26 ? element.health = element.health + 25 : element.health = element.maxHealth) );
+    getHealth(element) < getMaxHealth(element) - 11 ? element.health = element.health + 10 : element.health = element.maxHealth) );
   }
 
   function endOfDayFreeThePlaces() {
