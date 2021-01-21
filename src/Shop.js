@@ -61,7 +61,7 @@ function Shop(props) {
         if (env.Gold < oneItem.price) {
             return setShopKeeper("Sorry, mate, you seem to be a tad too short on cash.")
         }
-        if (oneItem.upgrade && inv.length > 0) {
+        if (oneItem.upgrade) {
             itemMatcher(oneItem);
         } else {
             purchase(oneItem)
@@ -70,13 +70,23 @@ function Shop(props) {
 }
 
 function itemMatcher(oneItem) {
-    for (let i = 0; i < inv.length; i++) {
-        if (inv[i].item == oneItem.item) {
-            return setShopKeeper("Last I heard, you already have one of these. No need for more.")
-        }
+    itemMatcherInner(oneItem, "Wooden Pikes", env.hasPikes);
+    itemMatcherInner(oneItem, "Garden", env.hasGarden);
+    itemMatcherInner(oneItem, "Toolkit", env.hasToolkit);
+    itemMatcherInner(oneItem, "Guards", env.hasGuards);
+    itemMatcherInner(oneItem, "Traps", env.hasTraps);
+}
+
+function itemMatcherInner(oneItem, string, bool) {
+    console.log(oneItem.item, string, bool)
+    if (oneItem.item != string) {return}
+    if (bool == true) {
+        return setShopKeeper("Last I heard, you already have one of these. No need for more.")
     }
-    purchase(oneItem);
-    return setShopKeeper("Thank you for your purchase.")
+    if (bool == false) {
+        purchase(oneItem)
+        return setShopKeeper("Thank you for your purchase.")
+    }
 }
 
 function shopCheckNoFaction(oneItem) {
@@ -84,7 +94,7 @@ function shopCheckNoFaction(oneItem) {
         setShopKeeper("Sorry, mate, you seem to be a tad too short on cash.")
         return
     }
-    if (oneItem.upgrade && inv.length > 0) {
+    if (oneItem.upgrade) {
         itemMatcher(oneItem)
     } else {
         purchase(oneItem)

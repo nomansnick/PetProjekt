@@ -62,7 +62,8 @@ background-color: grey;
 `;
 
 function EndOfDayEvent(props) {
-    const { char, quest, gainFactionPoint, forceRefresh, updateStats, challengeSuccessfulStat, challengeFailStat, buildings, endDone, nextRound, env } = props
+    const { char, gatherQuest, quest, gainFactionPoint, forceRefresh,
+        updateStats, challengeSuccessfulStat, challengeFailStat, buildings, endDone, nextRound, env } = props
     const [challenge, setChallenge] = useState(false)
     const [shown, IsShown] = useState(false)
     const [chalSuccess, setSuccess] = useState(false)
@@ -186,6 +187,7 @@ function EndOfDayEvent(props) {
                 gainFactionPoint("Guild", 5)
             }
         }
+        gatherQuest()
         nextOne(oneChar)
     }
 

@@ -10,6 +10,10 @@
   background: linear-gradient(to bottom left, rgba(137, 177, 187, 0.3), rgba(11, 21, 66, 0.7));
 }
 
+.Found {
+  color: green;
+}
+
 .Knight {
   background-image: url("./images/knight.png");
   background-size: cover;
