@@ -30,7 +30,6 @@ function App() {
   const [passedContent, setPassedContent] = useState();
   const [charList, setCharlist] = useState(Chars);
   const [villageBuilding, setVillageBuilding] = useState(Vill);
-  const [allData, setAllData] = useState(charList.concat(villageBuilding));
   const [env, setEnv] = useState(Env[0]);
   const [Day, setDay] = useState(env.DayTime);
   const [ForceRefresh, SetForceRefresh] = useState(true);
@@ -49,6 +48,7 @@ function App() {
   const [clueFour, setClueFour] = useState(" ");
   const [clueFive, setClueFive] = useState(" ");
   const [clueSix, setClueSix] = useState(" ");
+  const [allData, setAllData] = useState(charList.concat(villageBuilding).concat(inv).concat(env));
 
 
   let random;
