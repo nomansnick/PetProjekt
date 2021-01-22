@@ -146,6 +146,7 @@ function App() {
         ));
       }
       env.Food = env.Food - env.FoodConsumption;
+      if (env.Food < 0) {env.Food = 0;}
     }
     env.DayTime = !env.DayTime;
     setEnv(env);
@@ -309,19 +310,12 @@ function App() {
   }
 
   function gatherQuest() {
-    if (env.mainQuestClue1 && env.mainQuestClue2 && env.mainQuestClue3) {return}
+    if (env.mainQuest1Clue1 && env.mainQuest1Clue2 && env.mainQuest1Clue3) {return console.log("mindMegvan")}
     random = Math.floor(Math.random() * Math.floor(100))
-    if (random < 66) {return;}
-    questChecker(env.mainQuestClue1)
-    questChecker(env.mainQuestClue2)
-    questChecker(env.mainQuestClue3)
-  }
-
-  function questChecker(bool) {
-    if (bool == false) {
-      bool = true;
-      return;
-    }
+    if (random < 25) {return;}
+    if (!env.mainQuest1Clue1) {return env.mainQuest1Clue1 = true}
+    if (!env.mainQuest1Clue2) {return env.mainQuest1Clue2 = true}
+    if (!env.mainQuest1Clue3) {return env.mainQuest1Clue3=true}
   }
 
   function Fail() {
@@ -349,6 +343,7 @@ function App() {
 
   function questSingleUpdate(num, varToUse){
     varToUse = true;
+    console.log(varToUse)
     if (num == 1) {return setClueOne("Found")}
     if (num == 2) {return setClueTwo("Found")}
     if (num == 3) {return setClueThree("Found")}

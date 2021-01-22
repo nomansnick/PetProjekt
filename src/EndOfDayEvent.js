@@ -118,9 +118,10 @@ function EndOfDayEvent(props) {
             challengeSuccessfulStat(oneCharCheck, usedQuest, 75, 25, -20);
             return;
         }
+        else {
         setSuccess(false);
         setChallengeDone(true);
-        challengeFailStat(oneCharCheck, usedQuest)
+        challengeFailStat(oneCharCheck, usedQuest)}
     }
 
     function challengeSkipped(oneCharSk, usedQuest) {
