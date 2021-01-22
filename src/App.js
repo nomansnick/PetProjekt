@@ -48,6 +48,7 @@ function App() {
   const [clueFour, setClueFour] = useState(" ");
   const [clueFive, setClueFive] = useState(" ");
   const [clueSix, setClueSix] = useState(" ");
+  const [mainFight, setMainFight] = useState(false);
   const [allData, setAllData] = useState(charList.concat(villageBuilding).concat(inv).concat(env));
 
 
@@ -73,16 +74,19 @@ function App() {
     charList[num].isFree = bool;
     charList[num].Questing = type;
     charList[num].occupies = num2;
+    setCharlist(charList)
   }
 
   function buildUpdate(type, num1, bool, num2) {
     if (type == "Ming") {
       villageBuilding[num1].slot2 = bool;
       villageBuilding[num1].occupant2 = num2
+      setVillageBuilding(villageBuilding)
     }
     else {
       villageBuilding[num1].slot1 = bool;
       villageBuilding[num1].occupant1 = num2;
+      setVillageBuilding(villageBuilding)
     }
   }
 
@@ -97,6 +101,7 @@ function App() {
   function challengeFailStat(charToChange, usedQuest) {
     charList[charToChange.index - 1].health = charList[charToChange.index - 1].health - 60;
     charList[charToChange.index - 1].xp = charToChange.xp + usedQuest.rewardXp - 10;
+    setCharlist(charList)
   }
 
   function updateStats(oneChar) {
@@ -121,6 +126,7 @@ function App() {
       env.Threat = env.Threat - 100;
       env.Food > 50 ? env.Food = env.Food - 50 : env.Food = 0;  
       env.Gold > 1500 ? env.Gold = env.Gold - 1500 : env.Gold = 0;  
+      setEnv(env);
     }
   }
 
@@ -128,11 +134,13 @@ function App() {
     charList.forEach(element => (element.occupies = -1, element.isFree = true, (element.Questing == " " ?
       element.rested = true : element.rested = false), element.Questing = " ", levelUp(element),
       getHealth(element) < getMaxHealth(element) - 6 ? element.health = element.health + 5 : element.health = element.maxHealth));
+    setCharlist(charList);
   }
 
   function endOfDayFreeThePlaces() {
     villageBuilding.forEach(element => (element.occupant1 = -1, element.slot1 = false,
       element.occupant2 = -1, element.slot2 = false));
+    setVillageBuilding(villageBuilding);
   }
 
   function endofDayDayChanges() {
@@ -164,6 +172,7 @@ function App() {
       env.Food = env.Food - 2;
     env.Threat = env.Threat - 2}
     if (env.hasGarden) {env.Food = env.Food + 4}
+    setEnv(env);
   }
 
   function SideCharClick(content) {
@@ -327,6 +336,7 @@ function App() {
     if (quest == 1) {
       questUpdater(clue, env.mainQuest1Clue1_1, env.mainQuest1Clue1_2, env.mainQuest1Clue2_1,
         env.mainQuest1Clue2_2, env.mainQuest1Clue3_1, env.mainQuest1Clue3_2);
+      setEnv(env);
     } 
   }
 
@@ -390,6 +400,7 @@ function App() {
             <Switch>
               <Route path="/tournament">
                 <Tournament
+                charList = {charList} fightMain = {mainFight}
                 />
               </Route>
               <Route path="/village">

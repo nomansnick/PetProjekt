@@ -1,46 +1,54 @@
 [
     {
         "type": "Fighter",
+        "name": "Erte Komson",
         "health": 150,
         "maxHealth": 150,
         "strength": 6,
-        "constitutio": 6,
+        "constitution": 6,
         "dexterity": 1,
         "intelligence": 1,
         "charisma": 1,
+        "lvl": 5,
         "race": "Human"
     },
     {
         "type": "Defender",
-        "hp": 175,
-        "maxHp": 175,
+        "name": "Badu Legen",
+        "health": 175,
+        "maxHealth": 175,
         "strength": 4,
         "constitution": 8,
         "dexterity": 1,
         "intelligence": 1,
         "charisma": 1,
+        "lvl": 5,
         "race": "Human"
     },
     {
         "type": "Rogue",
-        "hp": 120,
-        "maxHp": 120,
+        "name": "Tavis Rennik",
+        "health": 120,
+        "maxHealth": 120,
         "strength": 1,
         "constitution": 1,
         "dexterity": 7,
         "intelligence": 1,
         "charisma": 5,
+        "lvl": 5,
         "race": "Human"
     },
     {
         "type": "Sorcerer",
-        "hp": 90,
-        "maxHp": 90,
+        "name": "Alten Sorel",
+        "health": 90,
+        "maxHealth": 90,
         "strength": 1,
         "constitution": 4,
         "dexterity": 1,
         "intelligence": 8,
         "charisma": 1,
+        "lvl": 5,
         "race": "Human"
     }
 ]

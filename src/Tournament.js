@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import ButtonGeneric from "./ButtonGeneric";
+import CombatModule from "./CombatModule";
 
 const FrameTg = styled.div`
 display: flex;
@@ -28,20 +30,54 @@ font-weight: bold;
 `;
 
 const CombatScreen = styled.div`
-width: 100%;
-background-color: rgba (50,50,50,0.3)
+position: absolute;
+display: flex;
+margin-left: -35%;
+width: 80%;
+height: 80%;
+z-index: 9;
+background-color: white;
 `;
 
-function Tournament() {
+const FightBlocker = styled.div`
+margin-left: -46%;
+margin-top: -7%;
+position: absolute;
+width: 100%;
+height: 100%;
+z-index: 8;
+background-color: black;
+`;
+
+function Tournament(props) {
+    const { charList, fightMain } = props;
+    const [fighterNum, setFighterNum] = useState();
+    const [fighting, setFighting] = useState()
+    const [fighterList, setFighterList] = useState([]);
+
+    useEffect(() => { setFighting(false) }, [fightMain])
+
+    function fight() {
+        let counter = 4;
+        charList.forEach(oneMan => (oneMan.isFree
+            ? fighterList[fighterList.length] = oneMan : counter = counter-1))
+        if (counter > 0) {
+            setFighterNum(counter)
+            setFighting(true)
+        }
+    }
+
     return (
         <FrameTg>
             <LeftSide>
-        <TitleTg>Tournament Grounds</TitleTg>
+                <TitleTg>Tournament Grounds</TitleTg>
+                <ButtonGeneric text="Sign up" Clicked={() => fight()} />
             </LeftSide>
             <RightSide>
-                <CombatScreen>
-                    it lesz a combat
-                </CombatScreen>
+                {fighting && <FightBlocker />}
+                {fighting && <CombatScreen>
+                    <CombatModule fighterNum={fighterNum} fighterList={fighterList} />
+                </CombatScreen>}
             </RightSide>
 
         </FrameTg>
