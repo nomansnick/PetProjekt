@@ -21,6 +21,7 @@
         "skillpoints": 0,
         "Questing": " ",
         "xp": 0,
+        "pc": true,
         "lvl": 1
     },
     {
@@ -45,6 +46,7 @@
         "skillpoints": 0,
         "Questing": " ",
         "xp": 0,
+        "pc": true,
         "lvl": 1
     },
     {
@@ -69,6 +71,7 @@
         "skillpoints": 0,
         "Questing": " ",
         "xp": 0,
+        "pc": true,
         "lvl": 1
     },
     {
@@ -93,6 +96,7 @@
         "skillpoints": 0,
         "Questing": " ",
         "xp": 0,
+        "pc": true,
         "lvl": 1
     }
     

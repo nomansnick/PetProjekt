@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ButtonGeneric from "./ButtonGeneric";
 import CombatModule from "./CombatModule";
+import Enemies from "./QuestAndEnemy/Enemies.json"
 
 const FrameTg = styled.div`
 display: flex;
@@ -54,6 +55,7 @@ function Tournament(props) {
     const [fighterNum, setFighterNum] = useState();
     const [fighting, setFighting] = useState()
     const [fighterList, setFighterList] = useState([]);
+    const [foeList, setFoeList] = useState([]);
 
     useEffect(() => { setFighting(false) }, [fightMain])
 
@@ -62,6 +64,9 @@ function Tournament(props) {
         charList.forEach(oneMan => (oneMan.isFree
             ? fighterList[fighterList.length] = oneMan : counter = counter-1))
         if (counter > 0) {
+            for (let i = 0; i < fighterList.length; i ++) {
+                foeList[i] = Enemies[fighterList[i].index-1]
+            }
             setFighterNum(counter)
             setFighting(true)
         }
@@ -76,7 +81,7 @@ function Tournament(props) {
             <RightSide>
                 {fighting && <FightBlocker />}
                 {fighting && <CombatScreen>
-                    <CombatModule fighterNum={fighterNum} fighterList={fighterList} />
+                    <CombatModule fighterNum={fighterNum} fighterList={fighterList} foeList = {foeList} />
                 </CombatScreen>}
             </RightSide>
 
