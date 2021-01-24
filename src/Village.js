@@ -13,7 +13,6 @@ function Village(props) {
     const { buildings, charList, dropDownCharClicked, charMessage, clearMessageBox,
         dropDownPlaceClicked, Day, ForceRefresh, env, inv, purchase } = props
 
-
     return (
         <VillageDiv>
             {buildings.slice(0, 3).map(OnePlace =>

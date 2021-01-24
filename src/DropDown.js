@@ -78,9 +78,4 @@ function DropDown (props) {
     )
 }
 
-export default DropDown
-
-/*
-
-
-*/
+export default DropDown;
