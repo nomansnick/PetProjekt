@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import ButtonGeneric from "./ButtonGeneric"
-import { getHealth, getMaxHealth, racialBonus } from "./Data/CharData/charStatFunctions";
+import { getDmgIncoming, getDmgOutGoing, getHealth, getMaxHealth, racialBonus } from "./Data/CharData/charStatFunctions";
 
 const FightFrame = styled.div`
 display: flex;
@@ -48,10 +48,29 @@ function CombatModule(props) {
     const [enemyList, setEnemyList] = useState(foeList);
     const [combat, setCombat] = useState(false)
     const [fightLog, setFightLog] = useState([])
+    const [allyCounter, setAllyCounter] = useState(); 
+    const [foeCounter, setFoeCounter] = useState();
+    const [refresherLocal, setRefresherLocal] = useState(false);
+
+    let countAlly = 0;
+    let countEnemy = 0;
+
+    let allies = fighterList;
+    let enemies = foeList;
+
+    let combatList = [...fighterList];
+    combatList = combatList.concat(enemyList);
+
+    useEffect(() => { setAllyCounter(countAlly) }, [refresherLocal])
+    useEffect(() => { setFoeCounter(countEnemy) }, [refresherLocal])
+
+    useEffect(() => { setAllyList(allies) }, [refresherLocal])
+    useEffect(() => { setEnemyList(enemies) }, [refresherLocal])
+
 
     function woundedAction(currentFighter) {
         currentFighter.health = currentFighter.health + 25;
-        const tempLog = [combatLog(currentFighter, " drinks a health potion.")].concat(fightLog);
+        const tempLog = [combatLog("" + currentFighter.name + " drinks a health potion.")].concat(fightLog);
         setFightLog(tempLog);
     }
 
@@ -60,9 +79,17 @@ function CombatModule(props) {
     }
 
     function faintCheck(fighter, fight) {
+        console.log("faintCchekelek")
+        console.log(fighter)
+        console.log(getHealth(fighter))
         if (getHealth(fighter) < getMaxHealth(fighter) / 5) {
-            fight = fight.filter(item => item !== fighter);
+            console.log("KevesHp")
+            combatList = fight.filter(item => item !== fighter);
+            fighter.pc == true ? countAlly = countAlly -1 : countEnemy = countEnemy - 1;
+            console.log(countAlly);
             groupUpdater(fight)
+            const tempLog = [combatLog("" + fighter.name + " faints.")].concat(fightLog);
+            setFightLog(tempLog);
         }
     }
 
@@ -71,55 +98,78 @@ function CombatModule(props) {
     }
 
     function groupUpdater(fight) {
-        let pcCamp = selectTeam(fight, true);
-        let npcCamp = selectTeam(fight, false);
-        setAllyList(pcCamp);
-        setEnemyList(npcCamp);
+        allies = selectTeam(fight, true);
+        enemies = selectTeam(fight, false);
+        console.log("AllyNew: " + allies)
+        setAllyList(allies);
+        console.log("AllyOld: " + allyList);
+        setEnemyList(enemies);
+        setRefresherLocal(!refresherLocal);
     }
 
     function selectTeam(fight, bool) {
         return fight.filter(item => item.pc == bool);
     }
 
+    //VEGTELEN  CIKLUS  VALAMIERT
     function beginCombat() {
-        let combatList = [...fighterList];
-        combatList = combatList.concat(enemyList);
-        let foeCounter = 0;
-        let allyCounter = 0;
-        let attempts = 0
+        countEnemy = combatList.filter(element => element.pc == false).length;
+        countAlly = combatList.filter(element => element.pc == true).length;
         combatList.sort((a, b) => (a.dexterity + racialBonus(a.race, "dexterity") < b.dexterity + racialBonus(b.race, "dexterity") ? 1 : -1))
-        combatList.forEach(oneFighter => (oneFighter.pc ? allyCounter = allyCounter + 1 : foeCounter = foeCounter - 1));
-        console.log(combatList)
-        //       while (foeCounter > 0 && allyCounter > 0) {
-        while (attempts == 0) {
+        while (countAlly > 0 && countEnemy > 0) {
+            console.log("while")
             for (let i = 0; i < combatList.length; i++) {
+                if (countAlly == 0) {return} 
+                if (countEnemy == 0) {return} 
                 let currentFighter = combatList[i]
                 if (!currentFighter.pc) {
+                    console.log("NPC")
                     if (woundedCheck(currentFighter) > 70) {
                         woundedAction(currentFighter)
                     }
                     else {
-                        let decisionWeighter = whatToDo(combatList)
+                        let decisionWeighter = whatToDo(combatList);
                         console.log(decisionWeighter)
                         console.log("fighting")
-                        decisionWeighter[0].weight > decisionWeighter[1].weight ? attempts = attempts + 1 : attempts = attempts + 1;
+                        let targetAttack = combatList.filter(element => element.index == decisionWeighter.attack.id)
+                        console.log(combatList);
+                        console.log(combatList.filter(element => element.index == decisionWeighter.attack.id))
+                        targetAttack = targetAttack[0];
+                        let targetHeal = combatList.filter(element => element.index == decisionWeighter.heal.id)
+                        targetHeal = targetHeal[0];
+                        decisionWeighter.attack.weight > decisionWeighter.heal.weight ? attack(currentFighter, targetAttack, combatList) : heal(currentFighter, targetHeal);
                     }
 
                 }
             }
         }
+        console.log("end of while")
+    }
+
+    function heal() {
+        console.log("not implemented yet")
+    }
+
+    function attack(attacker, victim, fight) {
+        console.log("ATTACK")
+        let dmg = getDmgOutGoing(attacker)
+        let inc = getDmgIncoming(victim, dmg);
+        victim.health = victim.health - inc;
+        const tempLog = [combatLog("" + attacker.name + " attacks " + victim.name + ", dealing " + inc + " dmg.")].concat(fightLog);
+        setFightLog(tempLog);
+        faintCheck(victim, fight);
     }
 
     function whatToDo(fight) {
         let npcs = fight.filter(item => item.pc == false);
         let pcs = fight.filter(item => item.pc == true);
         console.log(pcs)
-        let answer = [{ targetId: 0, targetWeight: 65 }, { healId: 0, healWeight: 0, }]
-        pcs.sort((a, b) => (getHealth(a) < getHealth(b) ? 1 : -1));
-        answer[0].targetId = pcs[0].index;
+        let answer = { attack : { id: 0, weight: 65 }, heal : { id: 0, weight: 0, }}
+        pcs.sort((a, b) => (getHealth(a) > getHealth(b) ? 1 : -1));
+        answer.attack.id = pcs[0].index;
         npcs.sort((a, b) => (getHealth(a) / getMaxHealth(0) > getHealth(b) / getMaxHealth(b) ? 1 : -1));
-        answer[1].healId = npcs[0].index;
-        answer[1].healWeight = Math.floor((getMaxHealth(npcs[0]) - getHealth(npcs[0])) / getMaxHealth(npcs[0])) * 100;
+        answer.heal.id = npcs[0].index;
+        answer.heal.weight = Math.floor((getMaxHealth(npcs[0]) - getHealth(npcs[0])) / getMaxHealth(npcs[0])) * 100;
         return answer
     }
 
