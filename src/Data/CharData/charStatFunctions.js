@@ -43,6 +43,10 @@ function getDmgOutGoing(char) {
     return random < getCritChance(char) ? critDmg : dmg;
 }
 
+function getMagicOutGoing(char) {
+    return racialBonus(char.race, "intelligence") + char.intelligence * 5
+}
+
 function getDmgIncoming(char, dmg) {
     let random = 0;
     random = Math.floor(Math.random() * Math.floor(100))
@@ -53,4 +57,4 @@ function getDmgIncoming(char, dmg) {
 
 export {racialBonus, getBlockChance, getCritChance,
     getDmgIncoming, getDmgOutGoing, getEvadeChance,
-    getMaxHealth, getMitigation, getHealth}
+    getMaxHealth, getMitigation, getHealth, getMagicOutGoing}

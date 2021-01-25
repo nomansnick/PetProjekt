@@ -56,8 +56,38 @@ function Tournament(props) {
     const [fighting, setFighting] = useState()
     const [fighterList, setFighterList] = useState([]);
     const [foeList, setFoeList] = useState([]);
+    const [fighterIndex, setFighterIndex] = useState(0);
+    const [allyCount, setAllyCount] = useState(0);
+    const [foeCount, setFoeCount] = useState(0);
+    const [playerChar, setPlayerChar] = useState();
 
     useEffect(() => { setFighting(false) }, [fightMain])
+
+    function playerSetter(player) {
+        setPlayerChar(player)
+    }
+
+    function indexSetter(num) {
+        console.log("ndexSetterKapott :" +  num)
+        setFighterIndex(num)
+        console.log(fighterIndex);
+    }
+
+    function foeCountSetter(num) {
+        setFoeCount(num)
+    }
+
+    function allyCountSetter(num) {
+        setAllyCount(num);
+    }
+
+    function setEnemies(enemies) {
+        setFoeList(enemies);
+    }
+
+    function setAllies(allies) {
+        setFighterList(allies);
+    }
 
     function fight() {
         let counter = 4;
@@ -68,6 +98,8 @@ function Tournament(props) {
                 foeList[i] = Enemies[fighterList[i].index-1]
             }
             setFighterNum(counter)
+            setAllyCount(counter);
+            setFoeCount(counter);
             setFighting(true)
         }
     }
@@ -81,7 +113,11 @@ function Tournament(props) {
             <RightSide>
                 {fighting && <FightBlocker />}
                 {fighting && <CombatScreen>
-                    <CombatModule fighterNum={fighterNum} fighterList={fighterList} foeList = {foeList} />
+                    <CombatModule fighterNum={fighterNum} fighterList={fighterList}
+                    foeList = {foeList} fighterIndex = {fighterIndex} indexSetter = {indexSetter}
+                    setAllies = {setAllies} setEnemies = {setEnemies} foeCount = {foeCount} allyCount = {allyCount}
+                    allyCountSetter = {allyCountSetter} foeCountSetter = {foeCountSetter} playerChar = {playerChar}
+                    playerSetter = {playerSetter}/>
                 </CombatScreen>}
             </RightSide>
 
