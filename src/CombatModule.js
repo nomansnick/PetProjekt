@@ -176,7 +176,7 @@ function CombatModule(props) {
         }
         else {
             indexSetter(mockIndex + 1)
-            mockindex = mockIndex + 1;
+            mockIndex = mockIndex + 1;
         }
         setAllies(allies);
         setEnemies(enemies);
