@@ -51,7 +51,7 @@ background-color: black;
 `;
 
 function Tournament(props) {
-    const { charList, fightMain } = props;
+    const { charList, fightMain, win, foughtAlready } = props;
     const [fighterNum, setFighterNum] = useState();
     const [fighting, setFighting] = useState()
     const [fighterList, setFighterList] = useState([]);
@@ -94,6 +94,7 @@ function Tournament(props) {
     }
 
     function fight() {
+        if (foughtAlready) {return}
         let counter = 4;
         charList.forEach(oneMan => (oneMan.isFree
             ? fighterList[fighterList.length] = oneMan : counter = counter-1))
@@ -121,7 +122,7 @@ function Tournament(props) {
                     foeList = {foeList} fighterIndex = {fighterIndex} indexSetter = {indexSetter}
                     setAllies = {setAllies} setEnemies = {setEnemies} foeCount = {foeCount} allyCount = {allyCount}
                     allyCountSetter = {allyCountSetter} foeCountSetter = {foeCountSetter} playerChar = {playerChar}
-                    playerSetter = {playerSetter} fightSetter = {fightSetter}/>
+                    playerSetter = {playerSetter} fightSetter = {fightSetter} win = {win}/>
                 </CombatScreen>}
             </RightSide>
 

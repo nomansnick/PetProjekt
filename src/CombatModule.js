@@ -55,7 +55,7 @@ flex-wrap: wrap;
 
 function CombatModule(props) {
     const { fighterNum, fighterList, fighterIndex, indexSetter, playerChar, playerSetter, fightSetter,
-        foeList, setAllies, setEnemies, foeCount, foeCountSetter, allyCount, allyCountSetter } = props
+        foeList, setAllies, setEnemies, foeCount, foeCountSetter, allyCount, allyCountSetter, win } = props
     const [allyList, setAllyList] = useState(fighterList);
     const [enemyList, setEnemyList] = useState(foeList);
     const [combat, setCombat] = useState(false)
@@ -165,24 +165,18 @@ function CombatModule(props) {
         nextOne();
         let check = winChecker()
         if (check.win == false) {return combatOneFighter();}
-        check.side == "npc" ? console.log("npc win") : console.log("pc win");
+        check.side == "npc" ? win("npc") : win("pc");
         fightSetter(false);
     }
 
     function nextOne() {
-        console.log("Ennyi: " + mockIndex)
-        console.log("Ennyiből: " + (combatList.length - 1));
         if (mockIndex == combatList.length - 1) {
-            console.log("ujrakezdes")
             mockIndex = 0;
             indexSetter(0)
-            setRefresherLocal(!refresherLocal)
         }
         else {
             indexSetter(mockIndex + 1)
-            setRefresherLocal(!refresherLocal)
-            mockIndex = mockIndex + 1
-            console.log("uj mock: " + mockIndex)
+            mockindex = mockIndex + 1;
         }
         setAllies(allies);
         setEnemies(enemies);

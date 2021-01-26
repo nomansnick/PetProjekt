@@ -50,6 +50,7 @@ function App() {
   const [clueSix, setClueSix] = useState(" ");
   const [mainFight, setMainFight] = useState(false);
   const [allData, setAllData] = useState(charList.concat(villageBuilding).concat(inv).concat(env));
+  const [foughtAlready, setFoughtAlready] = useState(false)
 
 
   let random;
@@ -146,6 +147,7 @@ function App() {
   function endofDayDayChanges() {
     if (!env.DayTime) {
       env.nrOfDay = env.nrOfDay + 1;
+      setFoughtAlready(false)
       envUpgradesCheck()
       if (env.Food < env.FoodConsumption) {
         env.Food = 0;
@@ -362,7 +364,11 @@ function App() {
     if (num == 6) {return setClueSix("Found")}
   }
 
-
+  function win(string) {
+    string === "npc" ? env.Guards = env.Guards + 5 : env.Guards = env.Guards + 25;
+    setFoughtAlready(true);
+    setEnv(env);
+  }
 
   return (
     <Router >
@@ -401,6 +407,7 @@ function App() {
               <Route path="/tournament">
                 <Tournament
                 charList = {charList} fightMain = {mainFight}
+                foughtAlready = {foughtAlready} win = {win}
                 />
               </Route>
               <Route path="/village">
