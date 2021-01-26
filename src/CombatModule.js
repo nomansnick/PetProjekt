@@ -54,7 +54,7 @@ flex-wrap: wrap;
 `;
 
 function CombatModule(props) {
-    const { fighterNum, fighterList, fighterIndex, indexSetter, playerChar, playerSetter,
+    const { fighterNum, fighterList, fighterIndex, indexSetter, playerChar, playerSetter, fightSetter,
         foeList, setAllies, setEnemies, foeCount, foeCountSetter, allyCount, allyCountSetter } = props
     const [allyList, setAllyList] = useState(fighterList);
     const [enemyList, setEnemyList] = useState(foeList);
@@ -115,9 +115,9 @@ function CombatModule(props) {
     function combatOneFighter() {
         winChecker();
         setCombat(true);
-        console.log("Mock" + mockIndex);
-        if (getHealth(combatList[mockIndex]) < getMaxHealth(combatList[fighterIndex]) / 5) { return console.log("skipped") }
-        console.log("választott:" + mockIndex);
+        console.log("Mock: " + mockIndex);
+        if (getHealth(combatList[mockIndex]) < getMaxHealth(combatList[mockIndex]) / 5) {
+            return Done() }
         let currentFighter = combatList[mockIndex];
         console.log("currentFighter: " + currentFighter.name)
         playerSetter(currentFighter)
@@ -155,26 +155,34 @@ function CombatModule(props) {
     }
 
     function playerTargetSelect(target) {
+        if (getHealth(target) < getMaxHealth(target) / 5) {
+            return}
         setPlayerTarget(target)
         setHasTarget(true)
     }
 
     function Done() {
         nextOne();
-        combatOneFighter();
+        let check = winChecker()
+        if (check.win == false) {return combatOneFighter();}
+        check.side == "npc" ? console.log("npc win") : console.log("pc win");
+        fightSetter(false);
     }
 
     function nextOne() {
-        if (fighterIndex == combatList.length - 1) {
+        console.log("Ennyi: " + mockIndex)
+        console.log("Ennyiből: " + (combatList.length - 1));
+        if (mockIndex == combatList.length - 1) {
             console.log("ujrakezdes")
             mockIndex = 0;
             indexSetter(0)
             setRefresherLocal(!refresherLocal)
         }
         else {
-            indexSetter(fighterIndexLocal + 1)
+            indexSetter(mockIndex + 1)
             setRefresherLocal(!refresherLocal)
-            mockIndex = fighterIndexLocal + 1
+            mockIndex = mockIndex + 1
+            console.log("uj mock: " + mockIndex)
         }
         setAllies(allies);
         setEnemies(enemies);
@@ -182,12 +190,18 @@ function CombatModule(props) {
     }
 
     function winChecker() {
+        let check = {win: false, side: "none"}
         if (allyCounter === 0) {
-            return console.log("npc win")
+            check.win = true;
+            check.side = "npc"
+            return  check
         }
         if (foeCounter === 0) {
-            return console.log("pc win")
+            check.win = true;
+            check.side = "pc"
+            return check
         }
+        return check
     }
 
     function npcTurnFn(currentFighter) {

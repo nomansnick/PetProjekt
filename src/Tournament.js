@@ -63,6 +63,10 @@ function Tournament(props) {
 
     useEffect(() => { setFighting(false) }, [fightMain])
 
+    function fightSetter(bool) {
+        setFighting(bool)
+    }
+
     function playerSetter(player) {
         setPlayerChar(player)
     }
@@ -117,7 +121,7 @@ function Tournament(props) {
                     foeList = {foeList} fighterIndex = {fighterIndex} indexSetter = {indexSetter}
                     setAllies = {setAllies} setEnemies = {setEnemies} foeCount = {foeCount} allyCount = {allyCount}
                     allyCountSetter = {allyCountSetter} foeCountSetter = {foeCountSetter} playerChar = {playerChar}
-                    playerSetter = {playerSetter}/>
+                    playerSetter = {playerSetter} fightSetter = {fightSetter}/>
                 </CombatScreen>}
             </RightSide>
 

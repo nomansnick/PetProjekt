@@ -1,6 +1,6 @@
 [
     {
-        "type": "Fighter",
+        "class": "Knight",
         "name": "Erte Komson",
         "index": 5,
         "health": 150,
@@ -15,7 +15,7 @@
         "race": "Human"
     },
     {
-        "type": "Defender",
+        "class": "Guardian",
         "name": "Badu Legen",
         "index": 6,
         "health": 175,
@@ -30,7 +30,7 @@
         "race": "Human"
     },
     {
-        "type": "Rogue",
+        "class": "Ranger",
         "name": "Tavis Rennik",
         "index": 7,
         "health": 120,
@@ -45,7 +45,7 @@
         "race": "Human"
     },
     {
-        "type": "Sorcerer",
+        "class": "Mage",
         "name": "Alten Sorel",
         "index": 8,
         "health": 90,
