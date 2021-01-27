@@ -60,6 +60,7 @@ function Tournament(props) {
     const [allyCount, setAllyCount] = useState(0);
     const [foeCount, setFoeCount] = useState(0);
     const [playerChar, setPlayerChar] = useState();
+    const [fightLog, setFightLog] = useState("Combat Begins!")
 
     useEffect(() => { setFighting(false) }, [fightMain])
 
@@ -69,6 +70,10 @@ function Tournament(props) {
 
     function playerSetter(player) {
         setPlayerChar(player)
+    }
+
+    function logSetter(cucc) {
+        setFightLog(cucc)
     }
 
     function indexSetter(num) {
@@ -118,11 +123,11 @@ function Tournament(props) {
             <RightSide>
                 {fighting && <FightBlocker />}
                 {fighting && <CombatScreen>
-                    <CombatModule fighterNum={fighterNum} fighterList={fighterList}
+                    <CombatModule fighterNum={fighterNum} fighterList={fighterList} logSetter = {logSetter}
                     foeList = {foeList} fighterIndex = {fighterIndex} indexSetter = {indexSetter}
                     setAllies = {setAllies} setEnemies = {setEnemies} foeCount = {foeCount} allyCount = {allyCount}
                     allyCountSetter = {allyCountSetter} foeCountSetter = {foeCountSetter} playerChar = {playerChar}
-                    playerSetter = {playerSetter} fightSetter = {fightSetter} win = {win}/>
+                    playerSetter = {playerSetter} fightSetter = {fightSetter} fightLog = {fightLog} win = {win}/>
                 </CombatScreen>}
             </RightSide>
 

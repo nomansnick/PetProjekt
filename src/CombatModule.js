@@ -17,12 +17,12 @@ display: flex;
 flex-direction: row;
 justify-content: space-around;
 font-size: 4vh;
-flex: 2;
+flex: 1;
 `;
 
 const FightBody = styled.div`
 display: flex;
-flex: 6;
+flex: 5;
 flex-direction: row;
 justify-content: space-between;
 `;
@@ -34,10 +34,17 @@ justify-content: space-around;
 `;
 
 const FightFooter = styled.div`
+width: 100%;
 display: flex;
-flex-direction: column;
-justify-content: center;
-flex:2;
+justify-content: space-around;
+flex:4;
+`;
+
+const FightContainer = styled.div`
+display: flex;
+width: 100%;
+flex-direction: row;
+justify-content: space-around
 `;
 
 const ButtonResizer = styled.div`
@@ -50,16 +57,29 @@ flex-direction: column;
 `;
 
 const TargetButtons = styled.div`
-flex-wrap: wrap;
+display: flex;
+flex-direction: column;
+`;
+
+const LogResizer = styled.div`
+display: flex;
+flex-direction: column;
+`;
+
+const NpcTurnDiv = styled.div`
+flex: 3;
+`;
+
+const NpcButtonDiv = styled.div`
+margin-left: 80%;
 `;
 
 function CombatModule(props) {
-    const { fighterNum, fighterList, fighterIndex, indexSetter, playerChar, playerSetter, fightSetter,
-        foeList, setAllies, setEnemies, foeCount, foeCountSetter, allyCount, allyCountSetter, win } = props
+    const { fighterNum, fighterList, fighterIndex, indexSetter, playerChar, playerSetter, fightSetter, fightLog,
+        logSetter, foeList, setAllies, setEnemies, foeCount, foeCountSetter, allyCount, allyCountSetter, win } = props
     const [allyList, setAllyList] = useState(fighterList);
     const [enemyList, setEnemyList] = useState(foeList);
     const [combat, setCombat] = useState(false)
-    const [fightingLog, setFightingLog] = useState([]);
     const [allyCounter, setAllyCounter] = useState(allyCount);
     const [foeCounter, setFoeCounter] = useState(foeCount);
     const [refresherLocal, setRefresherLocal] = useState(false);
@@ -75,7 +95,7 @@ function CombatModule(props) {
     combatList = combatList.concat(enemyList);
     combatList = combatList.sort((a, b) => (a.dexterity + racialBonus(a.race, "dexterity") < b.dexterity + racialBonus(b.race, "dexterity") ? 1 : -1))
 
-    let fightLog = ["Combat begins"];
+    let tempLog;
 
     let allies = fighterList;
     let enemies = foeList;
@@ -93,7 +113,8 @@ function CombatModule(props) {
 
     function woundedAction(currentFighter) {
         currentFighter.health = currentFighter.health + 25;
-        fightLog = [combatLog("" + currentFighter.name + " drinks a health potion.")].concat(fightLog);
+        tempLog = [combatLog("" + currentFighter.name + " drinks a health potion.")].concat(fightLog);
+        logSetter(tempLog);
     }
 
     function woundedCheck(currentFighter) {
@@ -103,23 +124,21 @@ function CombatModule(props) {
     function faintCheck(fighter) {
         if (getHealth(fighter) < getMaxHealth(fighter) / 5) {
             fighter.pc == true ? allyCountSetter(allyCount - 1) : foeCountSetter(foeCount - 1);
-            fightLog = [combatLog("" + fighter.name + " faints.")].concat(fightLog);
+            tempLog = [combatLog("" + fighter.name + " faints.")].concat(fightLog);
+            logSetter(tempLog);
         }
     }
 
     function combatLog(message) {
-        console.log("message" + message)
         return message;
     }
 
     function combatOneFighter() {
         winChecker();
         setCombat(true);
-        console.log("Mock: " + mockIndex);
         if (getHealth(combatList[mockIndex]) < getMaxHealth(combatList[mockIndex]) / 5) {
             return Done() }
         let currentFighter = combatList[mockIndex];
-        console.log("currentFighter: " + currentFighter.name)
         playerSetter(currentFighter)
         currentFighter.pc ? playerTurnFn(currentFighter) : npcTurnFn(currentFighter);
     }
@@ -132,18 +151,15 @@ function CombatModule(props) {
     }
 
     function playerDone() {
-        if (!hasTarget) {
-            return;
-        }
-        if (!hasAction) {
-            return;
-        }
+        if (!hasTarget) {return;}
+        if (!hasAction) {return;}
         doPlayerAction()
+        setHasAction(false);
+        setHasTarget(false);
         Done();
     }
 
     function doPlayerAction() {
-        console.log("jatekos: " + playerChar.name)
         playerAction == "Heal" ? heal(playerChar, playerTarget) : attack(playerChar, playerTarget);
     }
 
@@ -220,10 +236,10 @@ function CombatModule(props) {
 
     function heal(currentFighter, targetHeal) {
         let healDone = getMagicOutGoing(currentFighter);
-        console.log(healDone)
         targetHeal.health < targetHeal.maxHealth - healDone ?
             targetHeal.health = targetHeal.health + healDone : targetHeal.health = targetHeal.maxHealth;
-        fightLog = [combatLog("" + currentFighter.name + " heals " + targetHeal.name + ".")].concat(fightLog);
+        tempLog = [combatLog("" + currentFighter.name + " heals " + targetHeal.name + "for " + healDone)].concat(fightLog);
+        logSetter(tempLog);
     }
 
     function attack(attacker, victim) {
@@ -231,7 +247,8 @@ function CombatModule(props) {
         let inc = getDmgIncoming(victim, dmg);
         victim.health = victim.health - inc;
         setRefresherLocal(!refresherLocal)
-        fightLog = [combatLog("" + attacker.name + " attacks " + victim.name + ", dealing " + inc + " dmg.")].concat(fightLog);
+        tempLog = [combatLog("" + attacker.name + " attacks " + victim.name + ", dealing " + inc + " dmg.")].concat(fightLog);
+        logSetter(tempLog)
         faintCheck(victim);
     }
 
@@ -270,7 +287,7 @@ function CombatModule(props) {
                 <ButtonResizer><ButtonGeneric text="Prove Your Worth!" Clicked={() => combatOneFighter()} /></ButtonResizer>
             </FightFooter>}
             {combat && <FightFooter>
-                {playerTurn && <div>
+                {playerTurn && <FightContainer>
                     <ActionButtons>
                         <ButtonResizer><ButtonGeneric text = "Attack" Clicked = {() => playerActionSelect("Attack")}/></ButtonResizer>
                         <ButtonResizer><ButtonGeneric text = "Heal" Clicked = {() => playerActionSelect("Heal")}/></ButtonResizer>
@@ -281,10 +298,10 @@ function CombatModule(props) {
                         {playerAction == "Attack" &&
                             enemies.map(element => (<ButtonResizer key = {element.index+34}><ButtonGeneric text={element.name} Clicked={() => playerTargetSelect(element)} /></ButtonResizer>))}
                     </TargetButtons>
-                    <ButtonGeneric text="PlayerDone" Clicked={() => playerDone()} />
-                </div>}
-                {npcTurn && <div><ButtonGeneric text="NpcDone" Clicked={() => Done()} /></div>}
-                <ButtonResizer>{fightingLog.slice(0, 5).map(log => <div key={log + 7}>{log}</div>)}</ButtonResizer>
+                    <ButtonResizer><ButtonGeneric text="PlayerDone" Clicked={() => playerDone()} /></ButtonResizer>
+                </FightContainer>}
+                {npcTurn && <NpcTurnDiv><NpcButtonDiv><ButtonGeneric text="NpcDone" Clicked={() => Done()} /></NpcButtonDiv></NpcTurnDiv>}
+                <LogResizer>{fightLog.slice(0, 5).map(log => <div key={log}>{log}</div>)}</LogResizer>
             </FightFooter>}
         </FightFrame>
     )
