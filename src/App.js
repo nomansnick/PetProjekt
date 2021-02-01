@@ -52,7 +52,6 @@ function App() {
   const [clueFive, setClueFive] = useState(" ");
   const [clueSix, setClueSix] = useState(" ");
   const [mainFight, setMainFight] = useState(false);
-  const [allData, setAllData] = useState(charList.concat(villageBuilding).concat(inv).concat(env));
   const [foughtAlready, setFoughtAlready] = useState(false)
 
 
@@ -69,9 +68,22 @@ function App() {
   }
 
   function saveGame() {
-    let toSave = charList.concat(villageBuilding).concat(inv).concat(env);
+    let toSave = {chars : 0, places : 0, inv : 0, env : 0}
+    toSave.chars = charList;
+    toSave.places = villageBuilding;
+    toSave.inv = inv;
+    toSave.env = env
     localStorage.setItem('savedGame', toSave);
   };
+
+  function loadGame() {
+    const isThereASaveFile = localStorage.getItem('savedGame') === 'true';
+    const loadGame = isThereASaveFile ? localStorage.getItem('savedGame') : '';
+    setCharlist(loadGame.chars);
+    setVillageBuilding(loadGame.places);
+    setEnv(loadGame.env);
+    setInv(loadGame.inv);
+  }
 
   function dropDownPlaceClicked(num, type, onePlace) {
     charUpdate(num - 1, true, -1, " ")
