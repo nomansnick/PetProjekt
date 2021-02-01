@@ -14,6 +14,7 @@ display: flex;
 flex-direction: column;
 width: 100%;
 flex: 2;
+height: 100%;
 `;
 
 const RightSide = styled.div`
@@ -30,14 +31,32 @@ font-size: 3vh;
 font-weight: bold;
 `;
 
-const CombatScreen = styled.div`
-position: absolute;
+const QuarterMaster = styled.div`
+flex: 3;
+height: 100%;
 display: flex;
-margin-left: -35%;
-width: 80%;
-height: 80%;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-top: -60%;
+`;
+
+const CombatScreen = styled.div`
+display: flex;
+margin-top: 10%;
+width: 100%;
+height: 100%;
 z-index: 9;
-background-color: white;
+`;
+
+const Speech = styled.div`
+font-size: 2vh;
+`;
+
+const PgDesc = styled.div`
+font-size: 2vh;
+text-align: center;
+margin-top: 22%;
 `;
 
 const FightBlocker = styled.div`
@@ -46,8 +65,7 @@ margin-top: -7%;
 position: absolute;
 width: 100%;
 height: 100%;
-z-index: 8;
-background-color: black;
+z-index: 8;;
 `;
 
 function Tournament(props) {
@@ -61,6 +79,7 @@ function Tournament(props) {
     const [foeCount, setFoeCount] = useState(0);
     const [playerChar, setPlayerChar] = useState();
     const [fightLog, setFightLog] = useState("Combat Begins!")
+    const [qmSays, setQMSays] = useState("Welcome"); 
 
     useEffect(() => { setFighting(false) }, [fightMain])
 
@@ -99,7 +118,9 @@ function Tournament(props) {
     }
 
     function fight() {
-        if (foughtAlready) {return}
+        if (foughtAlready) {
+            setQMSays("You've already fought today. Get some rest!")
+            return}
         let counter = 4;
         charList.forEach(oneMan => (oneMan.isFree
             ? fighterList[fighterList.length] = oneMan : counter = counter-1))
@@ -118,9 +139,12 @@ function Tournament(props) {
         <FrameTg>
             <LeftSide>
                 <TitleTg>Tournament Grounds</TitleTg>
-                <ButtonGeneric text="Sign up" Clicked={() => fight()} />
+                <QuarterMaster>
+                    <Speech>Quartermaster Bollen: {qmSays}</Speech>
+                    <ButtonGeneric text="Sign up" Clicked={() => fight()} /></QuarterMaster>
             </LeftSide>
             <RightSide>
+                {!fighting && <PgDesc> You see armed men and women sparring all over the proving grounds. </PgDesc>}
                 {fighting && <FightBlocker />}
                 {fighting && <CombatScreen>
                     <CombatModule fighterNum={fighterNum} fighterList={fighterList} logSetter = {logSetter}

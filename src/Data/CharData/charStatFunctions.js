@@ -15,11 +15,11 @@ function getMaxHealth(char) {
 }
 
 function getHealth(char) {
-    return char.health + char.lvl * 10 + char.constitution * 5 + racialBonus(char.race, "maxHealth");   
+    return Math.floor(char.health + char.lvl * 10 + char.constitution * 5 + racialBonus(char.race, "maxHealth"));   
 }
 
 function getCritChance(char) {
-    return char.class !== "Mage" ? char.dexterity * 3 + racialBonus(char.race, "critChance") : 0;
+    return char.classname !== "Mage" ? char.dexterity * 3 + racialBonus(char.race, "critChance") : 0;
 }
 
 function getEvadeChance(char) {
@@ -37,7 +37,7 @@ function getBlockChance(char) {
 function getDmgOutGoing(char) {
     let random = 0;
     random = Math.floor(Math.random() * Math.floor(100))
-    let dmg = char.class !== "Mage"
+    let dmg = char.classname !== "Mage"
     ? racialBonus(char.race, "baseDmg") + char.strength * 2 + char.dexterity * 1
     : racialBonus(char.race, "baseDmg") + char.intelligence * 3 + char.charisma * 2;
     let critDmg = dmg * 3;

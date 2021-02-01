@@ -22,6 +22,9 @@ import EndOfDayEvent from "./EndOfDayEvent";
 import { Quest } from "./QuestAndEnemy/QuestV2";
 import { getHealth, getMaxHealth } from "./Data/CharData/charStatFunctions";
 import inventory from "./Data/EnvData/inventory.json";
+import NewVill from "./Data/PlaceData/villFresh.json";
+import NewChar from "./Data/CharData/charFresh.json";
+import NewEnv from "./Data/EnvData/envFresh.json";
 
 
 function App() {
@@ -54,6 +57,21 @@ function App() {
 
 
   let random;
+
+  function newGame() {
+    let newCharList = JSON.parse(JSON.stringify(NewChar));
+    setCharlist(newCharList);
+    let newPlaceList = JSON.parse(JSON.stringify(NewVill));
+    setVillageBuilding(newPlaceList);
+    let newEnv = JSON.parse(JSON.stringify(NewEnv));
+    setEnv(newEnv)
+    setInv([]);
+  }
+
+  function saveGame() {
+    let toSave = charList.concat(villageBuilding).concat(inv).concat(env);
+    localStorage.setItem('savedGame', toSave);
+  };
 
   function dropDownPlaceClicked(num, type, onePlace) {
     charUpdate(num - 1, true, -1, " ")
