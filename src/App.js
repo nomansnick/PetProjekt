@@ -25,6 +25,7 @@ import inventory from "./Data/EnvData/inventory.json";
 import NewVill from "./Data/PlaceData/villFresh.json";
 import NewChar from "./Data/CharData/charFresh.json";
 import NewEnv from "./Data/EnvData/envFresh.json";
+import MenuWindow from "./MenuWindow";
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
   const [charList, setCharlist] = useState(Chars);
   const [villageBuilding, setVillageBuilding] = useState(Vill);
   const [env, setEnv] = useState(Env[0]);
-  const [Day, setDay] = useState(env.DayTime);
+  const [Day, setDay] = useState(true);
   const [ForceRefresh, SetForceRefresh] = useState(true);
   const [quest, setQuest] = useState(Quest);
   const [endOfdayShown, setEndOfDayShown] = useState(false)
@@ -52,9 +53,10 @@ function App() {
   const [clueFive, setClueFive] = useState(" ");
   const [clueSix, setClueSix] = useState(" ");
   const [mainFight, setMainFight] = useState(false);
-  const [foughtAlready, setFoughtAlready] = useState(false)
+  const [foughtAlready, setFoughtAlready] = useState(false);
+  const [menuShown, setMenuShown] = useState(false);
 
-
+  const KEY = "SAVEDGAME";
   let random;
 
   function newGame() {
@@ -63,27 +65,39 @@ function App() {
     let newPlaceList = JSON.parse(JSON.stringify(NewVill));
     setVillageBuilding(newPlaceList);
     let newEnv = JSON.parse(JSON.stringify(NewEnv));
-    setEnv(newEnv)
+    setEnv(newEnv[0]);
+    setDay(env.DayTime);
     setInv([]);
+    setMenuShown(false)
+    SetForceRefresh(!ForceRefresh)
   }
 
   function saveGame() {
+    console.log("futok")
     let toSave = {chars : 0, places : 0, inv : 0, env : 0}
     toSave.chars = charList;
     toSave.places = villageBuilding;
     toSave.inv = inv;
-    toSave.env = env
-    localStorage.setItem('savedGame', toSave);
+    toSave.env = env;
+    localStorage.setItem(KEY, JSON.stringify(toSave));
+    setMenuShown(false);
   };
 
   function loadGame() {
-    const isThereASaveFile = localStorage.getItem('savedGame') === 'true';
-    const loadGame = isThereASaveFile ? localStorage.getItem('savedGame') : '';
-    setCharlist(loadGame.chars);
-    setVillageBuilding(loadGame.places);
-    setEnv(loadGame.env);
-    setInv(loadGame.inv);
+    let isThereASaveFile = localStorage.getItem(KEY);
+    isThereASaveFile = JSON.parse(isThereASaveFile);
+    if (isThereASaveFile.env == undefined) {return}
+    console.log(isThereASaveFile.env);
+    console.log(isThereASaveFile.chars);
+    setCharlist(isThereASaveFile.chars);
+    setVillageBuilding(isThereASaveFile.places);
+    setDay(isThereASaveFile.env.DayTime);
+    setEnv(isThereASaveFile.env);
+    setInv(isThereASaveFile.inv);
+    setMenuShown(false)
+    SetForceRefresh(!ForceRefresh);
   }
+
 
   function dropDownPlaceClicked(num, type, onePlace) {
     charUpdate(num - 1, true, -1, " ")
@@ -262,7 +276,7 @@ function App() {
   }
 
   function menuClick() {
-    console.log("KATT")
+    setMenuShown(!menuShown);
   }
 
   function nextRound(oneChar) {
@@ -402,6 +416,7 @@ function App() {
 
   return (
     <Router >
+      {menuShown && <MenuWindow newGame = {newGame} loadGame = {loadGame} saveGame = {saveGame} menuClick = {menuClick}/>}
       {endOfdayShown && <EndOfDayEvent char={endDayChar} quest={quest} gainFactionPoint={gainFactionPoint}
         forceRefresh={ForceRefresh} rand2={rand2} endDone={endDone} nextRound={nextRound} gatherQuest={gatherQuest}
         challengeSuccessfulStat={challengeSuccessfulStat} challengeFailStat={challengeFailStat}
@@ -413,7 +428,7 @@ function App() {
       <Frame>
         <TopShelf>
           <TopLeft>
-            <Menu onclick={menuClick} />
+            <Menu menuClick={menuClick}/>
           </TopLeft>
           <TopRight><Navi /></TopRight>
         </TopShelf>

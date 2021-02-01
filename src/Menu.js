@@ -2,9 +2,10 @@ import React from "react";
 import Button from "./Button";
 
 function Menu (props) {
-    const {onclick} = props
+    const {menuClick} = props
+
     return (
-        <Button onClick = {onclick} text = "MENU"/>
+        <Button onClick = {() => menuClick()} text = "MENU"/>
     )
 }
 
