@@ -205,8 +205,8 @@ function App() {
   }
 
   function envUpgradesCheck() {
-    if (env.hasTraps) { env.Food = env.Food + 1 }
-    if (env.hasPikes) { env.Threat = env.Threat - 1 }
+    if (env.hasTraps) { env.Food = env.Food + 1; }
+    if (env.hasPikes) { env.Threat = env.Threat - 1; }
     if (env.hasToolkit) {
       env.Food = env.Food + 1;
       env.Threat = env.Threat - 1;

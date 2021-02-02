@@ -141,7 +141,6 @@ function EndOfDayEvent(props) {
             return;
         }
         else {
-            console.log(bool)
             IsShown(true);
             setChallenge(false);
             challengeSuccessfulStat(oneChar, usedQuest, 0, 0, -20);
@@ -169,7 +168,6 @@ function EndOfDayEvent(props) {
         getHealth(oneChar) < getMaxHealth(oneChar) - 31
             ? oneChar.health = oneChar.health + 30
             : oneChar.health = oneChar.maxHealth;
-        console.log("resting");
         nextOne(oneChar)
     }
 

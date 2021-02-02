@@ -69,7 +69,7 @@ z-index: 8;;
 `;
 
 function Tournament(props) {
-    const { charList, fightMain, win, foughtAlready } = props;
+    const { charList, fightMain, win, foughtAlready, qmSaysApp } = props;
     const [fighterNum, setFighterNum] = useState();
     const [fighting, setFighting] = useState()
     const [fighterList, setFighterList] = useState([]);
@@ -79,7 +79,7 @@ function Tournament(props) {
     const [foeCount, setFoeCount] = useState(0);
     const [playerChar, setPlayerChar] = useState();
     const [fightLog, setFightLog] = useState("Combat Begins!")
-    const [qmSays, setQMSays] = useState("Welcome"); 
+    const [qmSays, setQMSays] = useState(qmSaysApp); 
 
     useEffect(() => { setFighting(false) }, [fightMain])
 
@@ -126,7 +126,8 @@ function Tournament(props) {
             for (let i = 0; i < fighterList.length; i ++) {
                 foeList[i] = Enemies[fighterList[i].index-1]
             }
-            setFighterNum(counter)
+            setFightLog(["Combat begins!"]);
+            setFighterNum(counter);
             setAllyCount(counter);
             setFoeCount(counter);
             setFighting(true)

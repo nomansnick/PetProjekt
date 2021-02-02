@@ -11,7 +11,7 @@ margin-left: 50%;
 width: 15%;
 height: 15%;
 z-index: 12;
-background-color: white;
+background-color: rgba(160, 160, 130, 0.7);
 `;
 
 const CloseButton = styled.div`

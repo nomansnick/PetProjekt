@@ -35,14 +35,14 @@ function getBlockChance(char) {
 }
 
 function getDmgOutGoing(char) {
-    let random = 0;
-    random = Math.floor(Math.random() * Math.floor(100))
+    let random = Math.floor(Math.random() * 100);
+    let random2 = Math.floor(Math.random() * 15)
     let dmg = char.classname !== "Mage"
     ? racialBonus(char.race, "baseDmg") + char.strength * 2 + char.dexterity * 1
     : racialBonus(char.race, "baseDmg") + char.intelligence * 3 + char.charisma * 2;
     let critDmg = dmg * 3;
 
-    return random < getCritChance(char) ? critDmg : dmg;
+    return random < getCritChance(char) ? critDmg + random2 : dmg + random2;
 }
 
 function getMagicOutGoing(char) {
@@ -50,11 +50,11 @@ function getMagicOutGoing(char) {
 }
 
 function getDmgIncoming(char, dmg) {
-    let random = 0;
-    random = Math.floor(Math.random() * Math.floor(100))
+    let random = Math.floor(Math.random() * 100)
+    let random2 = Math.floor(Math.random() * 15)
     let dmgTaken = dmg * (100 - getMitigation(char) - racialBonus(char.race, "mitigation")) / 100;
 
-    return random < getBlockChance ? 0 : dmgTaken;
+    return random < getBlockChance(char) ? 0 : dmgTaken - random2;
 }
 
 export {racialBonus, getBlockChance, getCritChance,
