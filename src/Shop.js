@@ -78,7 +78,6 @@ function itemMatcher(oneItem) {
 }
 
 function itemMatcherInner(oneItem, string, bool) {
-    console.log(oneItem.item, string, bool)
     if (oneItem.item != string) {return}
     if (bool == true) {
         return setShopKeeper("Last I heard, you already have one of these. No need for more.")

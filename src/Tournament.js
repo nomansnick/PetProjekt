@@ -96,9 +96,7 @@ function Tournament(props) {
     }
 
     function indexSetter(num) {
-        console.log("ndexSetterKapott :" +  num)
         setFighterIndex(num)
-        console.log(fighterIndex);
     }
 
     function foeCountSetter(num) {

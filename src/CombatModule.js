@@ -301,7 +301,7 @@ function CombatModule(props) {
                     <ButtonResizer><ButtonGeneric text="PlayerDone" Clicked={() => playerDone()} /></ButtonResizer>
                 </FightContainer>}
                 {npcTurn && <NpcTurnDiv><NpcButtonDiv><ButtonGeneric text="NpcDone" Clicked={() => Done()} /></NpcButtonDiv></NpcTurnDiv>}
-                <LogResizer>{fightLog.slice(0, 5).map(log => <div key={log}>{log}</div>)}</LogResizer>
+                <LogResizer>{fightLog.slice(0, 5).map(log => <div key={log + Math.random() * 10000}>{log}</div>)}</LogResizer>
             </FightFooter>}
         </FightFrame>
     )
