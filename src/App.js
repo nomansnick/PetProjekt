@@ -67,8 +67,8 @@ function App() {
     setEnv(newEnv[0]);
     setDay(env.DayTime);
     setInv([]);
-    setMenuShown(false)
-    SetForceRefresh(!ForceRefresh)
+    setMenuShown(false);
+    SetForceRefresh(!ForceRefresh);
   }
 
   function saveGame() {
@@ -90,21 +90,21 @@ function App() {
     setDay(isThereASaveFile.env.DayTime);
     setEnv(isThereASaveFile.env);
     setInv(isThereASaveFile.inv);
-    setMenuShown(false)
+    setMenuShown(false);
     SetForceRefresh(!ForceRefresh);
   }
 
   function dropDownPlaceClicked(num, type, onePlace) {
-    charUpdate(num - 1, true, -1, " ")
-    buildUpdate(type, onePlace.index - 1, false, -1)
-    setCharlist(charList)
-    SetForceRefresh(!ForceRefresh)
+    charUpdate(num - 1, true, -1, " ");
+    buildUpdate(type, onePlace.index - 1, false, -1);
+    setCharlist(charList);
+    SetForceRefresh(!ForceRefresh);
   }
 
   function dropDownCharClicked(oneMan, onePlace, type) {
-    charUpdate(oneMan.index - 1, false, onePlace.index, type)
-    buildUpdate(type, onePlace.index - 1, true, oneMan.index)
-    setCharlist(charList)
+    charUpdate(oneMan.index - 1, false, onePlace.index, type);
+    buildUpdate(type, onePlace.index - 1, true, oneMan.index);
+    setCharlist(charList);
     SetForceRefresh(!ForceRefresh);
   }
 
@@ -112,26 +112,26 @@ function App() {
     charList[num].isFree = bool;
     charList[num].Questing = type;
     charList[num].occupies = num2;
-    setCharlist(charList)
+    setCharlist(charList);
   }
 
   function buildUpdate(type, num1, bool, num2) {
     if (type == "Ming") {
       villageBuilding[num1].slot2 = bool;
-      villageBuilding[num1].occupant2 = num2
-      setVillageBuilding(villageBuilding)
+      villageBuilding[num1].occupant2 = num2;
+      setVillageBuilding(villageBuilding);
     }
     else {
       villageBuilding[num1].slot1 = bool;
       villageBuilding[num1].occupant1 = num2;
-      setVillageBuilding(villageBuilding)
+      setVillageBuilding(villageBuilding);
     }
   }
 
   function challengeSuccessfulStat(charToChange, usedQuest, num1, num2, num3) {
     env.Gold = env.Gold + usedQuest.rewardGold + num1;
     charList[charToChange.index - 1].xp = charToChange.xp + usedQuest.rewardXp + num2;
-    charList[charToChange.index - 1].health = charList[charToChange.index - 1].health + num3
+    charList[charToChange.index - 1].health = charList[charToChange.index - 1].health + num3;
     charList[charToChange.index - 1].occupies == 1 ? env.Villagers = env.Villagers + 5 : env.Guild = env.Guild + 5;
     setEnv(env);
   };
@@ -139,7 +139,7 @@ function App() {
   function challengeFailStat(charToChange, usedQuest) {
     charList[charToChange.index - 1].health = charList[charToChange.index - 1].health - 60;
     charList[charToChange.index - 1].xp = charToChange.xp + usedQuest.rewardXp - 10;
-    setCharlist(charList)
+    setCharlist(charList);
   }
 
   function updateStats(oneChar) {
@@ -213,9 +213,9 @@ function App() {
     }
     if (env.hasGuards) {
       env.Food = env.Food - 2;
-      env.Threat = env.Threat - 2
+      env.Threat = env.Threat - 2;
     }
-    if (env.hasGarden) { env.Food = env.Food + 4 }
+    if (env.hasGarden) { env.Food = env.Food + 4; }
     setEnv(env);
   }
 
@@ -236,31 +236,31 @@ function App() {
   function levelUp(checkedChar) {
     switch (checkedChar.lvl) {
       case 1:
-        levelUpInner(checkedChar, env.xpToLevel2)
+        levelUpInner(checkedChar, env.xpToLevel2);
         break;
       case 2:
-        levelUpInner(checkedChar, env.xpToLevel3)
+        levelUpInner(checkedChar, env.xpToLevel3);
         break;
       case 3:
-        levelUpInner(checkedChar, env.xpToLevel4)
+        levelUpInner(checkedChar, env.xpToLevel4);
         break;
       case 4:
-        levelUpInner(checkedChar, env.xpToLevel5)
+        levelUpInner(checkedChar, env.xpToLevel5);
         break;
       case 5:
-        levelUpInner(checkedChar, env.xpToLevel6)
+        levelUpInner(checkedChar, env.xpToLevel6);
         break;
       case 6:
-        levelUpInner(checkedChar, env.xpToLevel7)
+        levelUpInner(checkedChar, env.xpToLevel7);
         break;
       case 7:
-        levelUpInner(checkedChar, env.xpToLevel8)
+        levelUpInner(checkedChar, env.xpToLevel8);
         break;
       case 8:
-        levelUpInner(checkedChar, env.xpToLevel9)
+        levelUpInner(checkedChar, env.xpToLevel9);
         break;
       case 9:
-        levelUpInner(checkedChar, env.xpToLevel10)
+        levelUpInner(checkedChar, env.xpToLevel10);
         break;
     }
   }
@@ -284,7 +284,7 @@ function App() {
 
   function AdvanceTime() {
     setFailNum(0);
-    setMessageBox([" ", " ", " ", " "])
+    setMessageBox([" ", " ", " ", " "]);
     setNumShown(0);
     if (charList[0].Questing == "Quest") {
       quest.recipent = charList[0].name;
@@ -299,7 +299,7 @@ function App() {
       env.Food = env.Food + 1;
     }
     else if (oneItem.upgrade) {
-      upgradeBuyCheck(oneItem)
+      upgradeBuyCheck(oneItem);
     }
     else {
       inv.push(oneItem);
@@ -307,7 +307,7 @@ function App() {
     env.Gold = env.Gold - oneItem.price;
     setEnv(env);
     setInv(inv);
-    SetForceRefresh(!ForceRefresh)
+    SetForceRefresh(!ForceRefresh);
   }
 
   function upgradeBuyCheck(oneItem) {
@@ -316,7 +316,7 @@ function App() {
     upgradeBuyCheckInner(oneItem.item, "Garden");
     upgradeBuyCheckInner(oneItem.item, "Guards");
     upgradeBuyCheckInner(oneItem.item, "Toolkit");
-    upgradeBuyCheckInner(oneItem.item, "Wooden Pikes")
+    upgradeBuyCheckInner(oneItem.item, "Wooden Pikes");
   }
 
   function upgradeBuyCheckInner(string1, string2) {
@@ -337,7 +337,7 @@ function App() {
   }
 
   function gainFactionPoint(faction, point) {
-    env[faction] = env[faction] + point
+    env[faction] = env[faction] + point;
     setEnv(env);
   }
 
@@ -362,12 +362,12 @@ function App() {
   }
 
   function gatherQuest() {
-    if (env.mainQuest1Clue1 && env.mainQuest1Clue2 && env.mainQuest1Clue3) { return console.log("mindMegvan") }
-    random = Math.floor(Math.random() * Math.floor(100))
+    if (env.mainQuest1Clue1 && env.mainQuest1Clue2 && env.mainQuest1Clue3) { return console.log("mindMegvan"); }
+    random = Math.floor(Math.random() * Math.floor(100));
     if (random < 25) { return; }
-    if (!env.mainQuest1Clue1) { return env.mainQuest1Clue1 = true }
-    if (!env.mainQuest1Clue2) { return env.mainQuest1Clue2 = true }
-    if (!env.mainQuest1Clue3) { return env.mainQuest1Clue3 = true }
+    if (!env.mainQuest1Clue1) { return env.mainQuest1Clue1 = true; }
+    if (!env.mainQuest1Clue2) { return env.mainQuest1Clue2 = true; }
+    if (!env.mainQuest1Clue3) { return env.mainQuest1Clue3 = true; }
   }
 
   function Fail() {
@@ -396,12 +396,12 @@ function App() {
 
   function questSingleUpdate(num, varToUse) {
     varToUse = true;
-    if (num == 1) { return setClueOne("Found") }
-    if (num == 2) { return setClueTwo("Found") }
-    if (num == 3) { return setClueThree("Found") }
-    if (num == 4) { return setClueFour("Found") }
-    if (num == 5) { return setClueFive("Found") }
-    if (num == 6) { return setClueSix("Found") }
+    if (num == 1) { return setClueOne("Found"); }
+    if (num == 2) { return setClueTwo("Found"); }
+    if (num == 3) { return setClueThree("Found"); }
+    if (num == 4) { return setClueFour("Found"); }
+    if (num == 5) { return setClueFive("Found"); }
+    if (num == 6) { return setClueSix("Found"); }
   }
 
   function win(string) {
@@ -413,7 +413,7 @@ function App() {
 
   function winInner(num, string) {
     env.Guards = env.Guards + num;
-    setQmSaysApp(string)
+    setQmSaysApp(string);
   }
 
   return (
