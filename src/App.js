@@ -382,25 +382,12 @@ function App() {
   function Catch(quest, clue) {
     if (failNum > 3) { return; }
     if (quest == 1) {
-      questUpdater(clue, env.mainQuest1Clue1_1, env.mainQuest1Clue1_2, env.mainQuest1Clue2_1,
-        env.mainQuest1Clue2_2, env.mainQuest1Clue3_1, env.mainQuest1Clue3_2);
+      questSingleUpdate(clue);
       setEnv(env);
     }
   }
 
-  function questUpdater(num, var1, var2, var3, var4, var5, var6) {
-    switch (num) {
-      case 1: return questSingleUpdate(num, var1);
-      case 2: return questSingleUpdate(num, var2);
-      case 3: return questSingleUpdate(num, var3);
-      case 4: return questSingleUpdate(num, var4);
-      case 5: return questSingleUpdate(num, var5);
-      case 6: return questSingleUpdate(num, var6);
-    }
-  }
-
-  function questSingleUpdate(num, varToUse) {
-    varToUse = true;
+  function questSingleUpdate(num) {
     if (num == 1) { return setClueOne("Found"); }
     if (num == 2) { return setClueTwo("Found"); }
     if (num == 3) { return setClueThree("Found"); }

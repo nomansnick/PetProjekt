@@ -80,7 +80,7 @@ function Camp(props) {
             <BodyCamp>
                 <TaskDiv>
                     <CampDesc> <div> This is your camp! </div></CampDesc>
-                    <div>You can piece together whatever clues you have found!</div>
+                    <div>You can piece together whatever clues you have found! You can make only 2 mistakes in every cylce!</div>
                         {!bool && <QuestBodyDiv><CampQuest quest = {num} env = {env} Catch = {Catch} Fail = {Fail}
                         clueOne = {clueOne} clueTwo = {clueTwo} clueThree = {clueThree} clueFour = {clueFour} clueFive = {clueFive}
                         clueSix = {clueSix}

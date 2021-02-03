@@ -148,8 +148,6 @@ function EndOfDayEvent(props) {
     }
 
     function nextOne(oneChar) {
-        console.log("start: ")
-        console.log(oneChar)
         setUpdating(true);
         setChallenge(false);
         setChallengeDone(false);
