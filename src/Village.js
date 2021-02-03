@@ -20,7 +20,7 @@ function Village(props) {
                     <Center><Title>{OnePlace.name}</Title></Center>
                     {OnePlace.name == "Store" && Day
                         ? <PicStore><Shop env={env} inv={inv} purchase={purchase} /></PicStore>
-                        : <PicStore><div>IdeJonAKep</div></PicStore>
+                        : <PicStore><div></div></PicStore>
                     }
                     {Day && OnePlace.name == "Tavern"
                         || !Day && OnePlace.name == "Store"

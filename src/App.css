@@ -47,11 +47,27 @@
 }
 
 .Mage {
-  text-align: center;
+  background-image: url("./images/mage.png");
+  background-size: cover;
 }
 
 .Mag {
   width: 8vh;
   height: 8vh;
   text-align: center;
+}
+
+.Tavern {
+  background-image: url("./images/tavern_wip.png");
+  background-size: cover;
+}
+
+.Guild {
+  background-image: url("./images/guild_wip.png");
+  background-size: cover;
+}
+
+.Store {
+  background-image: url("./images/shop_wip.png");
+  background-size: cover;
 }
