@@ -59,15 +59,18 @@
 
 .Tavern {
   background-image: url("./images/tavern_wip.png");
-  background-size: cover;
+  background-size: 160%;
+  background-position: 60% 40%;
 }
 
 .Guild {
   background-image: url("./images/guild_wip.png");
-  background-size: cover;
+  background-size: 160%;
+  background-position: 60% 40%;
 }
 
 .Store {
   background-image: url("./images/shop_wip.png");
-  background-size: cover;
+  background-size: 160%;
+  background-position: 60% 40%;
 }

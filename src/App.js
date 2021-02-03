@@ -65,10 +65,11 @@ function App() {
     setVillageBuilding(newPlaceList);
     let newEnv = JSON.parse(JSON.stringify(NewEnv));
     setEnv(newEnv[0]);
-    setDay(env.DayTime);
+    setDay(NewEnv[0].DayTime);
     setInv([]);
     setMenuShown(false);
     SetForceRefresh(!ForceRefresh);
+    setEndDayChar(NewChar[0]);
   }
 
   function saveGame() {
@@ -90,6 +91,7 @@ function App() {
     setDay(isThereASaveFile.env.DayTime);
     setEnv(isThereASaveFile.env);
     setInv(isThereASaveFile.inv);
+    setEndDayChar(isThereASaveFile.chars[0]);
     setMenuShown(false);
     SetForceRefresh(!ForceRefresh);
   }
@@ -98,6 +100,7 @@ function App() {
     charUpdate(num - 1, true, -1, " ");
     buildUpdate(type, onePlace.index - 1, false, -1);
     setCharlist(charList);
+    setVillageBuilding(villageBuilding)
     SetForceRefresh(!ForceRefresh);
   }
 
@@ -105,6 +108,7 @@ function App() {
     charUpdate(oneMan.index - 1, false, onePlace.index, type);
     buildUpdate(type, onePlace.index - 1, true, oneMan.index);
     setCharlist(charList);
+    setVillageBuilding(villageBuilding);
     SetForceRefresh(!ForceRefresh);
   }
 
@@ -113,6 +117,7 @@ function App() {
     charList[num].Questing = type;
     charList[num].occupies = num2;
     setCharlist(charList);
+    SetForceRefresh(!ForceRefresh);
   }
 
   function buildUpdate(type, num1, bool, num2) {
