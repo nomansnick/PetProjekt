@@ -203,15 +203,15 @@ function CombatModule(props) {
         let check = {win: false, side: "none"}
         if (allyCounter === 0) {
             check.win = true;
-            check.side = "npc"
-            return  check
+            check.side = "npc";
+            return check;
         }
         if (foeCounter === 0) {
             check.win = true;
-            check.side = "pc"
-            return check
+            check.side = "pc";
+            return check;
         }
-        return check
+        return check;
     }
 
     function npcTurnFn(currentFighter) {
