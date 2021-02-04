@@ -34,6 +34,11 @@ width: 6vh;
 height: 6vh;
 `;
 
+const Comment = styled.div`
+color: grey;
+font-size: 2vh;
+`;
+
 function Shop(props) {
     const { env, inv, purchase } = props
     const [shopkeeper, setShopKeeper] = useState("Welcome")
@@ -118,7 +123,7 @@ return (
                 ))}
             </Goods>
         </ShopDiv>
-        <div>{comment()}</div>
+        <Comment>{comment()}</Comment>
 
     </FrameShop>
 )

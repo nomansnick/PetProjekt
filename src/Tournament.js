@@ -14,7 +14,6 @@ display: flex;
 flex-direction: column;
 width: 100%;
 flex: 2;
-height: 100%;
 `;
 
 const RightSide = styled.div`
@@ -36,9 +35,8 @@ flex: 3;
 height: 100%;
 display: flex;
 flex-direction: column;
-justify-content: center;
+justify-content: space-around;
 align-items: center;
-margin-top: -60%;
 `;
 
 const CombatScreen = styled.div`
@@ -51,6 +49,13 @@ z-index: 9;
 
 const Speech = styled.div`
 font-size: 2vh;
+`;
+
+const QMText = styled.div`
+display: flex;
+flex-direction: column;
+height: 40vh;
+align-items: center;
 `;
 
 const PgDesc = styled.div`
@@ -135,12 +140,16 @@ function Tournament(props) {
     }
 
     return (
-        <FrameTg>
+        <FrameTg className = "Tournament">
             <LeftSide>
                 <TitleTg>Tournament Grounds</TitleTg>
                 <QuarterMaster>
+                    <QMText>
                     <Speech>Quartermaster Bollen: {qmSays}</Speech>
-                    <ButtonGeneric text="Sign up" Clicked={() => fight()} /></QuarterMaster>
+                    <ButtonGeneric text="Sign up" Clicked={() => fight()} />
+                    </QMText>
+                    <div/>
+                </QuarterMaster>
             </LeftSide>
             <RightSide>
                 {!fighting && <PgDesc> You see armed men and women sparring all over the proving grounds. </PgDesc>}

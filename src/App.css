@@ -74,3 +74,21 @@
   background-size: 160%;
   background-position: 60% 40%;
 }
+
+.Tournament {
+  background-image: url("./images/provinggrounds_wip.png");
+  background-size: 100%;
+  background-position: 100% 50%;
+}
+
+.Notes {
+  background-image: url("./images/notes_wip.png");
+  background-size: 130%;
+  background-position: 50% 40%;
+}
+
+.Camp {
+  background-image: url("./images/camp_wip.png");
+  background-size: 105%;
+  background-position: 50% 40%;
+}
