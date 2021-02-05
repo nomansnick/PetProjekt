@@ -434,11 +434,11 @@ function App() {
                 messageBox={messageBox} clearMessageBox={clearMessageBox} />
             </LeftUpper>
             <LeftLower>
-              <div>Number of Days: {env.nrOfDay}</div>
-              <div>{Day ? "The sun is high on the sky" : "The moon shines palely"}</div>
-              <div>Standing with the Villagers: {env.Villagers}</div>
-              <div>Standing with the Guild: {env.Guild}</div>
-              <div>Standing with the Guards: {env.Guards}</div>
+              <div>Days: {env.nrOfDay}</div>
+              <div>{Day ? "Daytime" : "Nighttime"}</div>
+              <div>Village: {env.Villagers}</div>
+              <div>Guild: {env.Guild}</div>
+              <div>Guards: {env.Guards}</div>
               <div>Gold: {env.Gold}</div>
             </LeftLower>
           </Left>

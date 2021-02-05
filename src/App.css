@@ -24,6 +24,12 @@
   height: 8vh;
 }
 
+.Kni{
+  background-image: url("./images/knight_head.png");
+  height: 25%;
+  background-size: cover;
+}
+
 .Ranger {
   background-image: url("./images/ranger.png");
   background-size: cover;
@@ -33,6 +39,12 @@
   width: 8vh;
   height: 8vh;
   text-align: center;
+}
+
+.Ran{
+  background-image: url("./images/ranger_head.png");
+  height: 25%;
+  background-size: cover;
 }
 
 .Guardian {
@@ -46,6 +58,12 @@
   text-align: center;
 }
 
+.Gua{
+  background-image: url("./images/guardian_head.png");
+  height: 25%;
+  background-size: cover;
+}
+
 .Mage {
   background-image: url("./images/mage.png");
   background-size: cover;
@@ -55,6 +73,12 @@
   width: 8vh;
   height: 8vh;
   text-align: center;
+}
+
+.Ma {
+  background-image: url("./images/mage_head.png");
+  height: 25%;
+  background-size: cover;
 }
 
 .Tavern {
