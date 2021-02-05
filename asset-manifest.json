@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/PetProjekt/static/css/main.3520c7a7.chunk.css",
+    "main.js": "/PetProjekt/static/js/main.83f1901f.chunk.js",
+    "main.js.map": "/PetProjekt/static/js/main.83f1901f.chunk.js.map",
+    "runtime-main.js": "/PetProjekt/static/js/runtime-main.c588a529.js",
+    "runtime-main.js.map": "/PetProjekt/static/js/runtime-main.c588a529.js.map",
+    "static/js/2.905b3071.chunk.js": "/PetProjekt/static/js/2.905b3071.chunk.js",
+    "static/js/2.905b3071.chunk.js.map": "/PetProjekt/static/js/2.905b3071.chunk.js.map",
+    "index.html": "/PetProjekt/index.html",
+    "static/css/main.3520c7a7.chunk.css.map": "/PetProjekt/static/css/main.3520c7a7.chunk.css.map",
+    "static/js/2.905b3071.chunk.js.LICENSE.txt": "/PetProjekt/static/js/2.905b3071.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/PetProjekt/static/media/tavern_wip.54bc9ee0.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c588a529.js",
+    "static/js/2.905b3071.chunk.js",
+    "static/css/main.3520c7a7.chunk.css",
+    "static/js/main.83f1901f.chunk.js"
+  ]
+}
