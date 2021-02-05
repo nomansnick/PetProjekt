@@ -36,7 +36,7 @@ function challenges(enemy, recipent, num) {
         }
         case "thief": switch (num) {
             case 1: return "The man invites " + recipent + " to a game of cards with an innocent smile."
-            case 2: return "Just as " + recipent + "steps closer, the man gets to his feet, and reaches for a handbow."
+            case 2: return "Just as " + recipent + " steps closer, the man gets to his feet, and reaches for a handbow."
             case 3: return "The man, grateful to finally have a companion, offers " + recipent + " a drink."
         }
     }
@@ -66,7 +66,7 @@ function challengeFail(enemy, recipent, num) {
     switch (enemy) {
         case "hermit": switch (num) {
             case 1: return "'I haven't the slightest clue,' admits " + recipent + ". \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
-            case 2: return "'Give me a break, old man!' " + recipent + "exclaims. \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
+            case 2: return "'Give me a break, old man!' " + recipent + " exclaims. \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
             case 3: return "'A delusional hermit?'" + recipent + " asks. \n The hermit shrieks and hexes " + recipent + ". Then, he vanishes into thin air."
         }
         case "wolf": switch (num) {
@@ -86,7 +86,7 @@ function challengeFail(enemy, recipent, num) {
 function success(enemy, recipent, giver){
     switch(enemy) {
         case "hermit": return "" + recipent + " returns with the trinkets sought."
-        case "thief": return  "" + recipent + "takes the chest back to the " + giver + ".";
+        case "thief": return  "" + recipent + " takes the chest back to the " + giver + ".";
         case "wolf": return  "" + recipent + " takes the dead-drop hidden in the stump back to the " + giver + ".";
     }
 }
