@@ -68,9 +68,8 @@ function App() {
     setDay(NewEnv[0].DayTime);
     setInv([]);
     setMenuShown(false);
-    SetForceRefresh(!ForceRefresh);
-    setEndDayChar(NewChar[0]);
-  }
+    setEndDayChar(newCharList[0]);
+    SetForceRefresh(!ForceRefresh);  }
 
   function saveGame() {
     let toSave = { chars: 0, places: 0, inv: 0, env: 0 }

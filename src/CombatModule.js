@@ -1,7 +1,8 @@
 import { fireEvent } from "@testing-library/react";
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import ButtonGeneric from "./ButtonGeneric"
+import {v1 as uuid} from "uuid";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import ButtonGeneric from "./ButtonGeneric";
 import { getDmgIncoming, getDmgOutGoing, getHealth, getMagicOutGoing, getMaxHealth, racialBonus } from "./Data/CharData/charStatFunctions";
 
 const FightFrame = styled.div`
@@ -301,7 +302,7 @@ function CombatModule(props) {
                     <ButtonResizer><ButtonGeneric text="PlayerDone" Clicked={() => playerDone()} /></ButtonResizer>
                 </FightContainer>}
                 {npcTurn && <NpcTurnDiv><NpcButtonDiv><ButtonGeneric text="NpcDone" Clicked={() => Done()} /></NpcButtonDiv></NpcTurnDiv>}
-                <LogResizer>{fightLog.slice(0, 5).map(log => <div key={log}>{log}</div>)}</LogResizer>
+                <LogResizer>{fightLog.slice(0, 5).map(log => <div key={uuid()}>{log}</div>)}</LogResizer>
             </FightFooter>}
         </FightFrame>
     )
